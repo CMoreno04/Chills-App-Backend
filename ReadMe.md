@@ -42,6 +42,7 @@ Run the script:
    ./pipeline.sh
    ```
    or
+   
     ```cmd
    pipeline.cmd
    ```
