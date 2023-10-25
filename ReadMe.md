@@ -40,9 +40,9 @@ Run the script:
 
    ```bash
    ./pipeline.sh
+
 or 
 
-cmd
 pipeline.cmd
 
    ```
