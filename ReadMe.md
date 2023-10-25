@@ -30,22 +30,20 @@ This is a simple backend in Spring Boot that uses a MySQL database for persisten
 3. **VSCode**: Once you have the necessary extensions installed, you can open your project in VSCode. The extensions will automatically detect your project type and provide relevant suggestions and IntelliSense.
 4. **Database Configuration**: By default, the MySQL instance will be set up with a root password as 'root' and a database named 'chillisdb'. Ensure to update the `application.properties` file in the Spring Boot application to match these credentials.
 
-## Automated Pipeline: `pipeline.sh`
+## Automated Pipeline: `pipeline.sh`|`pipeline.cmd (Windows)`
 
-The `pipeline.sh` is a simple shell script that automates the process of pulling the latest code from the repository, building the Maven project, dockerizing the application, and deploying it using Docker Compose.
+The `pipeline.sh` |`pipeline.cmd (Windows)` is a simple shell script that automates the process of pulling the latest code from the repository, building the Maven project, dockerizing the application, and deploying it using Docker Compose.
 
 ### How to Execute the Pipeline:
 
-1. Ensure the `pipeline.sh` script has execute permissions:
-
-   ```bash
-   chmod +x pipeline.sh
-   ```
-
-2. Run the script:
+Run the script:
 
    ```bash
    ./pipeline.sh
+   ```
+   or
+    ```cmd
+   pipeline.cmd
    ```
 
    Follow the on-screen logs to check the progress.
