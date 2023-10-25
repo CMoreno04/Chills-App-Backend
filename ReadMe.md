@@ -40,12 +40,13 @@ Run the script:
 
    ```bash
    ./pipeline.sh
+or 
+
+cmd
+pipeline.cmd
+
    ```
-   or
    
-    ```cmd
-   pipeline.cmd
-   ```
 
    Follow the on-screen logs to check the progress.
 
