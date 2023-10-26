@@ -2,7 +2,7 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 
 REM Define variables
-SET SQL_FILE_PATH="C:\Users\cmoreno\Documents\Projects\chills-restaurant-midterm\backend\app\sql\chillisdb.sql"
+SET SQL_FILE_PATH="\sql\chillisdb.sql"
 SET MYSQL_CONTAINER="app-db-mysql-chillis-1"
 SET MYSQL_PASSWORD="rootroot"
 
