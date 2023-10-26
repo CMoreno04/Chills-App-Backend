@@ -3,7 +3,7 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-SQL_FILE_PATH="/Users/cmoreno/Documents/Projects/chills-restaurant-midterm/backend/app/sql/chillisdb.sql"
+SQL_FILE_PATH="./sql/chillisdb.sql"
 MYSQL_CONTAINER="app-db-mysql-chillis-1"
 MYSQL_PASSWORD="rootroot"
 
@@ -33,7 +33,7 @@ docker exec -it "$MYSQL_CONTAINER" bash -c "mysql -u root -p$MYSQL_PASSWORD < sc
 
 # Cleanup: Remove the .sql file from the container
 echo "Cleaning up: Removing .sql file from container..."
-docker exec -it "$MYSQL_CONTAINER" rm /tmp/schema.sql
+docker exec -it "$MYSQL_CONTAINER" rm schema.sql
 
 echo "Schema loaded successfully!"
 
