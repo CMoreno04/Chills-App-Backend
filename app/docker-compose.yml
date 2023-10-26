@@ -10,9 +10,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootroot
       MYSQL_DATABASE: chillisdb
-    volumes:
-      - ./mysql-data:/var/lib/mysql
-      - ./mysql-config:/etc/mysql/conf.d
+    
 
   chillis-restaurant-backed:
     image: chillisrestaurant-app:latest
