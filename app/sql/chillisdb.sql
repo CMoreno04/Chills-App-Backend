@@ -1,5 +1,5 @@
+USE chillisdb;
 
-use chillisdb;
 -- MySQL dump 10.13  Distrib 8.0.35, for macos13 (arm64)
 --
 -- Host: localhost    Database: chillisdb

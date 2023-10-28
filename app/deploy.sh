@@ -27,9 +27,12 @@ docker-compose up -d
 echo "Copying .sql file to the MySQL container..."
 docker cp "$SQL_FILE_PATH" "$MYSQL_CONTAINER":schema.sql
 
+echo "Waiting for MySQL to start..."
+sleep 20   # waits for 20 seconds
+
 # Load the schema into MySQL inside the container
 echo "Loading schema into MySQL..."
-docker exec -it "$MYSQL_CONTAINER" bash -c "mysql -h 127.0.0.1 -P 3306 -u root -p$MYSQL_PASSWORD chillisdb< schema.sql"
+docker exec -it "$MYSQL_CONTAINER" bash -c "mysql -u root -p$MYSQL_PASSWORD < schema.sql"
 
 # Cleanup: Remove the .sql file from the container
 echo "Cleaning up: Removing .sql file from container..."
