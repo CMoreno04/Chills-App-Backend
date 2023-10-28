@@ -1,4 +1,4 @@
-package com.chillisrestaurant.app.Services;
+package com.chillisrestaurant.app.services;
 
 import com.chillisrestaurant.app.dao.request.SignUpRequest;
 import com.chillisrestaurant.app.dao.request.SigninRequest;

@@ -11,8 +11,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.chillisrestaurant.app.Services.JwtService;
-import com.chillisrestaurant.app.Services.UserService;
+import com.chillisrestaurant.app.services.JwtService;
+import com.chillisrestaurant.app.services.UserService;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;

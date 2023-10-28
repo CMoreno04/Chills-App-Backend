@@ -1,18 +1,18 @@
-package com.chillisrestaurant.app.Services.Impl;
+package com.chillisrestaurant.app.services.impl;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.chillisrestaurant.app.Repositories.UserRepository;
-import com.chillisrestaurant.app.Services.AuthenticationService;
-import com.chillisrestaurant.app.Services.JwtService;
 import com.chillisrestaurant.app.dao.request.SignUpRequest;
 import com.chillisrestaurant.app.dao.request.SigninRequest;
 import com.chillisrestaurant.app.dao.response.JwtAuthenticationResponse;
 import com.chillisrestaurant.app.entities.Role;
 import com.chillisrestaurant.app.entities.User;
+import com.chillisrestaurant.app.repositories.UserRepository;
+import com.chillisrestaurant.app.services.AuthenticationService;
+import com.chillisrestaurant.app.services.JwtService;
 
 import lombok.RequiredArgsConstructor;
 

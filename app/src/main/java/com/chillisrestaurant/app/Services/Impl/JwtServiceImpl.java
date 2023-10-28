@@ -1,4 +1,4 @@
-package com.chillisrestaurant.app.Services.Impl;
+package com.chillisrestaurant.app.services.impl;
 
 import java.security.Key;
 import java.util.Date;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.chillisrestaurant.app.Services.JwtService;
+import com.chillisrestaurant.app.services.JwtService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

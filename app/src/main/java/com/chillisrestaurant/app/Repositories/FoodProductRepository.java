@@ -1,4 +1,4 @@
-package com.chillisrestaurant.app.Repositories;
+package com.chillisrestaurant.app.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

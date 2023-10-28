@@ -18,8 +18,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.chillisrestaurant.app.Services.UserService;
 import com.chillisrestaurant.app.filter.JwtAuthenticationFilter;
+import com.chillisrestaurant.app.services.UserService;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.chillisrestaurant.app.Services;
+package com.chillisrestaurant.app.services;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 

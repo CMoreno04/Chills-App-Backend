@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chillisrestaurant.app.Services.FoodProductService;
 import com.chillisrestaurant.app.entities.FoodProductDTO;
+import com.chillisrestaurant.app.services.FoodProductService;
 
 @RestController
 @RequestMapping("/api/foodProduct")

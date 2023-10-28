@@ -29,7 +29,7 @@ docker cp "$SQL_FILE_PATH" "$MYSQL_CONTAINER":schema.sql
 
 # Load the schema into MySQL inside the container
 echo "Loading schema into MySQL..."
-docker exec -it "$MYSQL_CONTAINER" bash -c "mysql -u root -p$MYSQL_PASSWORD < schema.sql"
+docker exec -it "$MYSQL_CONTAINER" bash -c "mysql -h 127.0.0.1 -P 3306 -u root -p$MYSQL_PASSWORD chillisdb< schema.sql"
 
 # Cleanup: Remove the .sql file from the container
 echo "Cleaning up: Removing .sql file from container..."

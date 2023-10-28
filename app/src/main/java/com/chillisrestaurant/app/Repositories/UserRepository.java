@@ -1,4 +1,4 @@
-package com.chillisrestaurant.app.Repositories;
+package com.chillisrestaurant.app.repositories;
 
 import java.util.Optional;
 

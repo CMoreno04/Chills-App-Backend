@@ -1,4 +1,4 @@
-package com.chillisrestaurant.app.Services;
+package com.chillisrestaurant.app.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.chillisrestaurant.app.Repositories.FoodProductRepository;
 import com.chillisrestaurant.app.entities.FoodProductDTO;
+import com.chillisrestaurant.app.repositories.FoodProductRepository;
 
 @Service
 public class FoodProductService {
