@@ -1,5 +1,7 @@
 package com.chillisrestaurant.app.config;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,8 +24,6 @@ import com.chillisrestaurant.app.filter.JwtAuthenticationFilter;
 import com.chillisrestaurant.app.services.UserService;
 
 import lombok.RequiredArgsConstructor;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -54,7 +54,7 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
