@@ -1,28 +1,23 @@
 # Use the official maven/Java 17 image to create a build artifact.
 FROM arm64v8/maven:3.9.5-eclipse-temurin-17 AS build
 
-# Set the current working directory inside the image
 WORKDIR /app
 
-# Copy the pom.xml file first to leverage Docker cache
-COPY /app/pom.xml .
-
-# Download the dependencies. This is a Docker trick 
-# to keep the cached maven dependencies if the pom.xml doesn't change.
+# Copy the pom.xml and download dependencies
+COPY pom.xml .
 RUN mvn dependency:go-offline
 
-# Copy the project source
-COPY /app/src src
-
-# Package the application and clear maven cache to reduce image size.
+# Copy source and package the application
+COPY src src
 RUN mvn clean package -DskipTests && \
     rm -rf target/classes && \
     rm -rf /root/.m2
 
-FROM arm64v8/maven:3.9.5-eclipse-temurin-17
+# Use a JRE for running the application. Ensure the image exists and is compatible with ARM64 architecture.
+FROM arm64v8/openjdk:17-jre-slim
 
-# Copy the WAR from the build stage
+WORKDIR /app
+
+# Copy the WAR from the build stage and set the command to run your application.
 COPY --from=build /app/target/app-0.0.1-SNAPSHOT.war app.war
-
-# Set the command to run your application using Spring Boot's embedded Tomcat.
-CMD ["java", "-jar", "/app.war"]
+CMD ["java", "-jar", "app.war"]
