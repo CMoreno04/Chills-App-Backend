@@ -4,11 +4,11 @@ FROM arm64v8/maven:3.9.5-eclipse-temurin-17 AS build
 WORKDIR /app
 
 # Copy the pom.xml and download dependencies
-COPY pom.xml .
+COPY /app/pom.xml .
 RUN mvn dependency:go-offline
 
 # Copy source and package the application
-COPY src src
+COPY /app/src src
 RUN mvn clean package -DskipTests && \
     rm -rf target/classes && \
     rm -rf /root/.m2
