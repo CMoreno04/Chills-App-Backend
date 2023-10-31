@@ -16,6 +16,7 @@ cd app
 echo "Building Maven project..."
 mvn clean package -DskipTests
 
+cd ..
 # Step 3: Build the Docker image
 echo "Building Docker image..."
 sudo docker build -t chillisrestaurant-app:latest .
