@@ -14,7 +14,7 @@ RUN mvn clean package -DskipTests && \
     rm -rf /root/.m2
 
 # Use a JRE for running the application. Ensure the image exists and is compatible with ARM64 architecture.
-FROM arm64v8/openjdk:17-jre-slim
+FROM arm64v8/maven:3.9.5-eclipse-temurin-17
 
 WORKDIR /app
 
