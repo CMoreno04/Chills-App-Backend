@@ -1,5 +1,5 @@
 # Use the official maven/Java 17 image to create a build artifact.
-FROM arm64v8/maven:3.8.4-openjdk-17-slim AS build
+FROM arm64v8/maven:3.9.5-eclipse-temurin-17 AS build
 
 # Set the current working directory inside the image
 WORKDIR /app
