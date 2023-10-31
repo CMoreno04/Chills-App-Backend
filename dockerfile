@@ -19,8 +19,7 @@ RUN mvn clean package -DskipTests && \
     rm -rf target/classes && \
     rm -rf /root/.m2
 
-# Use OpenJDK 17 JRE for ARM to run the WAR. JRE is smaller than JDK and is sufficient to run the app.
-FROM arm64v8/openjdk:17-jre-slim
+FROM arm64v8/maven:3.9.5-eclipse-temurin-17
 
 # Copy the WAR from the build stage
 COPY --from=build /app/target/app-0.0.1-SNAPSHOT.war app.war
