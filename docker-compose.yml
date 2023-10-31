@@ -16,7 +16,7 @@ services:
     depends_on:
       - db-mysql-chillis
     ports:
-      - "8080:8080"
+      - "8081:8081"
     environment:
         - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql-chillis:3306/chillisdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
         - SPRING_DATASOURCE_USERNAME=root
