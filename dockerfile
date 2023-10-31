@@ -6,6 +6,7 @@ RUN mvn dependency:go-offline
 COPY /app/src ./src
 RUN mvn package -DskipTests
 
+
 FROM eclipse-temurin:17-jre-focal
 
 
