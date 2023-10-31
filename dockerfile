@@ -6,9 +6,7 @@ RUN mvn dependency:go-offline
 COPY /app/src ./src
 RUN mvn package -DskipTests
 
-
 FROM eclipse-temurin:17-jre-focal
-
 
 COPY --from=builder /app/target/app-0.0.1-SNAPSHOT.war /app.war
 CMD ["java", "-jar", "/app.war"]
