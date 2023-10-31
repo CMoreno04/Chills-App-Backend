@@ -1,5 +1,6 @@
 # Use the official maven/Java 17 image to create a build artifact.
-FROM maven:3.8.4-openjdk-17-slim AS build
+# Note: Ensure the maven image supports ARM, else you might need to manually create one.
+FROM arm64v8/maven:3.8.4-openjdk-17-slim AS build
 
 # Set the current working directory inside the image
 WORKDIR /app
@@ -17,8 +18,8 @@ COPY src src/
 # Package the application
 RUN mvn clean package -DskipTests
 
-# Use OpenJDK 17 to run the WAR
-FROM openjdk:17-slim
+# Use OpenJDK 17 for ARM to run the WAR
+FROM arm64v8/openjdk:17-slim
 
 # Copy the WAR from the build stage
 COPY --from=build /app/target/app-0.0.1-SNAPSHOT.war app.war
