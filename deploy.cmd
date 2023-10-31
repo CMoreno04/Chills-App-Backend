@@ -1,7 +1,7 @@
 @echo off
 SETLOCAL ENABLEDELAYEDEXPANSION
 
-SET SQL_FILE_PATH=.\sql\chillisdb.sql
+SET SQL_FILE_PATH=.\app\sql\chillisdb.sql
 SET MYSQL_CONTAINER=app-db-mysql-chillis-1
 SET MYSQL_PASSWORD=rootroot
 
