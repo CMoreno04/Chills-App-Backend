@@ -3,7 +3,7 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-SQL_FILE_PATH="./app/sql/chillisdb.sql"
+SQL_FILE_PATH="/app/sql/chillisdb.sql"
 MYSQL_CONTAINER="app-db-mysql-chillis-1"
 MYSQL_PASSWORD="rootroot"
 
@@ -11,6 +11,7 @@ MYSQL_PASSWORD="rootroot"
 echo "Pulling latest code from the repository..."
 git pull origin main
 
+cd app
 # Step 2: Build the Maven project
 echo "Building Maven project..."
 mvn clean package -DskipTests
