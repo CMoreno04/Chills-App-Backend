@@ -5,14 +5,14 @@ FROM arm64v8/maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
 
 # Copy the pom.xml file first to leverage Docker cache
-COPY pom.xml .
+COPY /app/pom.xml .
 
 # Download the dependencies. This is a Docker trick 
 # to keep the cached maven dependencies if the pom.xml doesn't change.
 RUN mvn dependency:go-offline
 
 # Copy the project source
-COPY src ./src
+COPY /app/src src
 
 # Package the application and clear maven cache to reduce image size.
 RUN mvn clean package -DskipTests && \
