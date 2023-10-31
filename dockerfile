@@ -6,14 +6,14 @@ FROM arm64v8/maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
 
 # Copy the pom.xml file to download dependencies
-COPY pom.xml .
+COPY pom.xml ./app
 
 # Download the dependencies before we build the app, this is a Docker trick 
 # in order to keep the cached maven dependencies if they don't change
 RUN mvn dependency:go-offline
 
 # Copy the project source
-# COPY src src/
+COPY src app/src/
 
 # Package the application
 RUN mvn clean package -DskipTests
