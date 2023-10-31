@@ -2,7 +2,7 @@ version: "3.1"
 
 services:
   db-mysql-chillis:
-    image: linuxserver/mariadb:latest
+    image: mysql-server:latest
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
