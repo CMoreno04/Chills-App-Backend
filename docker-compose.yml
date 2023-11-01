@@ -6,7 +6,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/chillisdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3307/chillisdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=rootroot
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -19,7 +19,7 @@ services:
       - MYSQL_ROOT_PASSWORD=rootroot
       - MYSQL_DATABASE=chillisdb
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mariadb-data:/var/lib/mysql
 
