@@ -4,11 +4,9 @@ FROM arm32v7/maven:3.9.5-eclipse-temurin-17-focal
 # Set the working directory in the container
 WORKDIR /app
 
-RUN ls 
-
 # Copy the pom.xml and src directory (containing the source code) into the image
 COPY pom.xml .
-COPY src ./src
+COPY app/src ./src
 
 # Use Maven to build the project inside the Docker image
 RUN apt-get update && \
@@ -19,5 +17,5 @@ RUN apt-get update && \
 EXPOSE 8082
 
 # Run the built Spring Boot application
-CMD ["java", "-jar", "target/your-spring-boot-app-name.jar"]
+CMD ["java", "-jar", "target/app-0.0.1-SNAPSHOT.jar"]
 
