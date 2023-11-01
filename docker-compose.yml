@@ -6,7 +6,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-        - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/chillisdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+        - SPRING_DATASOURCE_URL=jdbc:mysql://192.168.0.1:3306/chillisdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
         - SPRING_DATASOURCE_USERNAME=root
         - SPRING_DATASOURCE_PASSWORD=rootroot
         - SPRING_JPA_HIBERNATE_DDL_AUTO=update
