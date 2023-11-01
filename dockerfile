@@ -4,6 +4,8 @@ FROM arm32v7/maven:3.9.5-eclipse-temurin-17-focal
 # Set the working directory in the container
 WORKDIR /app
 
+RUN ls 
+
 # Copy the pom.xml and src directory (containing the source code) into the image
 COPY pom.xml .
 COPY src ./src
