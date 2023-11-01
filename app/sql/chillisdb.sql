@@ -1,5 +1,3 @@
-CREATE SCHEMA chillisdb;
-
 USE chillisdb;
 
 -- MySQL dump 10.13  Distrib 8.0.35, for macos13 (arm64)
