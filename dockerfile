@@ -5,7 +5,7 @@ FROM arm32v7/maven:3.9.5-eclipse-temurin-17-focal
 WORKDIR /app
 
 # Copy the pom.xml and src directory (containing the source code) into the image
-COPY pom.xml .
+COPY app/pom.xml .
 COPY app/src ./src
 
 # Use Maven to build the project inside the Docker image
