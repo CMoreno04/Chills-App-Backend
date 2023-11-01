@@ -1,7 +1,8 @@
-package com.chillisrestaurant.app.config;
+package com.chillisrestaurant.app.security.config;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,17 +21,18 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.chillisrestaurant.app.filter.JwtAuthenticationFilter;
+import com.chillisrestaurant.app.security.filter.JwtAuthenticationFilter;
 import com.chillisrestaurant.app.services.UserService;
-
-import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfiguration {
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final UserService userService;
+
+    @Autowired
+    private  JwtAuthenticationFilter jwtAuthenticationFilter;
+    
+    @Autowired
+    private  UserService userService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

@@ -1,4 +1,4 @@
-package com.chillisrestaurant.app.dao.request;
+package com.chillisrestaurant.app.security.dao.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SigninRequest {
-    private String username;
-    private String password;
+public class JwtAuthenticationResponse {
+    private String token;
 }
