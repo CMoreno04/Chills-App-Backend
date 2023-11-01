@@ -14,7 +14,7 @@ services:
       - mariadb
 
   mariadb:
-    image: mariadb:latest
+    image: yobasystems/alpine-mariadb:arm32v7
     environment:
       - MYSQL_ROOT_PASSWORD=rootroot
       - MYSQL_DATABASE=chillisdb
