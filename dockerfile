@@ -1,5 +1,5 @@
 # Use an ARM-compatible base image with Java 17 (e.g., adoptopenjdk or another provider that supports ARM).
-FROM arm32v7/adoptopenjdk:17-jdk-hotspot
+FROM arm32v7/maven:3.9.5-eclipse-temurin-17-focal
 
 # Set the working directory in the container
 WORKDIR /app
