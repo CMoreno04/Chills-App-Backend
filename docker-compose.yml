@@ -3,6 +3,7 @@ version: "3.1"
 services:
   chillis-restaurant-backend:
     image: chillisrestaurant-app:latest
+    network_mode: host
     ports:
       - "8081:8081"
     environment:
