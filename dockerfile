@@ -1,17 +1,14 @@
-# Use an ARM-compatible base image with Maven and Java 17.
-FROM arm32v7/tomcat:10.1.15-jdk17-temurin-jammy
+# Use the official OpenJDK 17 image as a parent image
+FROM arm32v7/eclipse-temurin:17-jdk-focal
 
-# Delete the default web applications from Tomcat (optional)
-RUN rm -rf /usr/local/tomcat/webapps/*
+# Set the working directory in the Docker container
+WORKDIR /app
 
-# Add your WAR file to the Tomcat webapps directory
-ADD app/target/app-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+# Copy the WAR file into the container at /app
+COPY ./target/my-spring-boot-app-*.war /app/app.war
 
-# Optionally set the JAVA_OPTS environment variable if you need to pass additional options to the JVM
-# ENV JAVA_OPTS="-Dsome.property=value"
+# Specify the port the container should expose
+EXPOSE 8080
 
-# Expose the port your app runs on
-EXPOSE 8081
-
-# Start Tomcat server
-CMD ["catalina.sh", "run"]
+# Use the "java" command to run the application
+ENTRYPOINT ["java", "-jar", "app.war"]
