@@ -17,7 +17,7 @@ import com.chillisrestaurant.app.security.dao.response.RegisteredResponse;
 import com.chillisrestaurant.app.services.AuthenticationService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("auth")
 public class AuthenticationController {
 
     @Autowired
