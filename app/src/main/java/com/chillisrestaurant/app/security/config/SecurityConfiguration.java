@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -40,7 +41,7 @@ public class SecurityConfiguration {
                                 // CSRF Configuration
                                 .csrf(csrf -> csrf
                                                 .ignoringRequestMatchers(
-                                                                "/login","/")
+                                                                "/login", "/")
                                                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                                 // CORS Configuration
@@ -50,11 +51,13 @@ public class SecurityConfiguration {
 
                                 // Authorization Configuration
                                 .authorizeHttpRequests(authorize -> authorize
-                                                .requestMatchers("/", "/home", "/login", "/static/**", "/css/**",
-                                                                "/js/**",
-                                                                "/images/**")
-                                                .permitAll()
-                                                .requestMatchers("/api/**").authenticated()
+                                                .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/home")).permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/static/**")).permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/images/**")).permitAll()
                                                 .anyRequest().authenticated())
 
                                 // Session Management
