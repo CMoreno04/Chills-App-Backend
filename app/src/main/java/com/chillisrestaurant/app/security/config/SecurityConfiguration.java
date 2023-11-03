@@ -52,7 +52,7 @@ public class SecurityConfiguration {
 
                 // Authorization Requests
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/", "/static/**", "/build/**", "/favicon.ico", "/manifest.json").permitAll()
                         .anyRequest().authenticated())
 
                 // Session Management
