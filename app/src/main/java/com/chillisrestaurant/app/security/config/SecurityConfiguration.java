@@ -42,17 +42,18 @@ public class SecurityConfiguration {
                                 .csrf(csrf -> csrf
                                                 .ignoringRequestMatchers(
                                                                 new AntPathRequestMatcher("/login"))
-                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/"))
+                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/api/v1/auth/**"))
                                                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                                 // CORS Configuration
-                                .cors(cors -> cors
-                                                .configurationSource(request -> new CorsConfiguration()
-                                                                .applyPermitDefaultValues()))
+                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
 
                                 // Authorization Configuration
                                 .authorizeHttpRequests(authorize -> authorize
                                                 .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/**"))
+                                                .permitAll()
                                                 .requestMatchers(new AntPathRequestMatcher("/home")).permitAll()
                                                 .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
                                                 .requestMatchers(new AntPathRequestMatcher("/static/**")).permitAll()
@@ -78,14 +79,17 @@ public class SecurityConfiguration {
         @Bean
         CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
-                configuration.setAllowedOrigins(Arrays.asList("*")); // Permit access from localhost:3000
+                configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8081")); // Permit
+                                                                                                                  // access
+                                                                                                                  // from
+                                                                                                                  // localhost:3000
                 configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // Include
                                                                                                                     // PATCH
                                                                                                                     // if
                                                                                                                     // needed
                 configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With",
                                 "accept",
-                                "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
+                                "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", "X-XSRF-TOKEN"  ));
                 configuration.setExposedHeaders(Arrays.asList("Authorization"));
                 configuration.setAllowCredentials(true);
                 configuration.setMaxAge(3600L); // Set max age to 1 hour
