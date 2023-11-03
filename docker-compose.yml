@@ -4,7 +4,7 @@ services:
   chillis-restaurant-backend:
     image: chillisrestaurant-app:latest
     ports:
-      - "8081"
+      - "8081:8081"
     environment:
         - SERVER_PORT=8081
         - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/chillisdb?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
