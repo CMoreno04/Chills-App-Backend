@@ -7,5 +7,9 @@ import org.springframework.web.servlet.view.RedirectView;
 @RestController
 public class SpaRedirectController {
 
+    @GetMapping("/")
+    public String index() {
+        return "index";
+    }
 
 }
