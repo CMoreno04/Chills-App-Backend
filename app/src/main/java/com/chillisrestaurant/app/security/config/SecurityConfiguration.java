@@ -40,16 +40,16 @@ public class SecurityConfiguration {
 
                 // CSRF Configuration
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers(  "/", 
-                        "/home", 
-                        "/login", 
-                        "/static/**", // This allows access to all static resources
-                        "/css/**", 
-                        "/js/**", 
-                        "/images/**", 
-                        "/webjars/**", 
-                        "/favicon.ico", 
-                        "/manifest.json")
+                        .ignoringRequestMatchers("/",
+                                "/home",
+                                "/login",
+                                "/static/**", // This allows access to all static resources
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/webjars/**",
+                                "/favicon.ico",
+                                "/manifest.json")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                 // Content Security and XSS Protection
