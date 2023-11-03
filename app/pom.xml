@@ -101,7 +101,7 @@
 		</plugins>
 		<resources>
 			<resource>
-				<directory>src/main/resources/static</directory>
+				<directory>/var/lib/jenkins/workspace/Chills_FrontEnd/build</directory>
 				<targetPath>META-INF/resources</targetPath> <!-- for Servlet 3.0+ containers -->
 				<includes>
 					<include>**/*</include> <!-- Include all files in the build directory -->
