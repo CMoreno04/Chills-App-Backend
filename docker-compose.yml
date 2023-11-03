@@ -8,7 +8,17 @@ services:
     environment:
       - SERVER_PORT=8081
       - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/chillisdb?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      # Remaining environment variables...
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootroot
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=updatex
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MariaDBDialect
+      - SPRING_JPA_HIBERNATE_NAMING_PHYSICAL_STRATEGY=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK=INFO
+      - LOGGING_LEVEL_COM_CHILLISRESTAURANT=DEBUG
+      - SPRING_DEVTOOLS_RESTART_ENABLED=true
+      - TOKEN_SIGNING_KEY=413F4428472B4B6250655368566D5970337336763979244226452948404D6351
     depends_on:
       - mariadb
     networks:
