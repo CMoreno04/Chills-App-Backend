@@ -1,14 +1,14 @@
 package com.chillisrestaurant.app.security.dao.request;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class SigninRequest {
-    private String password;
+public class EmployeeSignUpRequest extends SignUpRequest {
+    private String employeeId;
 }

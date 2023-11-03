@@ -16,6 +16,7 @@ public class FoodProductDTO {
     private double price;
     private String description;
     private String name;
+    private String category;
     private String image;
 
     public FoodProductDTO(FoodProduct foodProduct) {
@@ -23,6 +24,7 @@ public class FoodProductDTO {
         this.price = foodProduct.getPrice();
         this.description = foodProduct.getDescription();
         this.name = foodProduct.getName();
+        this.category = foodProduct.getCategory();
         this.image = Base64.getEncoder().encodeToString(foodProduct.getImageBlob());
     }
       

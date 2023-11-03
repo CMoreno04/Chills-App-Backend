@@ -18,6 +18,7 @@ public class FoodProduct {
     private double price;
     private String description;
     private String name;
+    private String category;
 
     @Lob
     @Column(columnDefinition="LONGBLOB")

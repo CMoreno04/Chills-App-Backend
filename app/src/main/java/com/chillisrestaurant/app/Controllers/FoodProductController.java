@@ -12,14 +12,14 @@ import com.chillisrestaurant.app.entities.FoodProductDTO;
 import com.chillisrestaurant.app.services.FoodProductService;
 
 @RestController
-@RequestMapping("/api/foodProduct")
+@RequestMapping("/api/food")
 public class FoodProductController {
 
     @Autowired
     private FoodProductService foodProductService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<FoodProductDTO>> getProductById() {
+    public ResponseEntity<List<FoodProductDTO>> getAllFoodProducts() {
         return  ResponseEntity.ok(this.foodProductService.getAllProducts());
     }
 }
