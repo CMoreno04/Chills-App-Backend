@@ -3,6 +3,7 @@ package com.chillisrestaurant.app.security.config;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -37,32 +39,43 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // CSRF Configuration - Only disable CSRF for specific endpoints if absolutely
+                // necessary
+                .csrf(csrf -> csrf.ignoringRequestMatchers(
+                        "/login", // typically, you'd only disable CSRF for endpoints that are used by external
+                                  // clients that can't handle CSRF
+                        "/some/external/api"
+                // add other paths that are used for server-to-server communication or that
+                // require stateless operation
+                )
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
-                // CSRF Configuration
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/",
+                // Content Security and XSS Protection
+                .headers(headers -> headers
+                        .contentSecurityPolicy("form-action 'self';").and()
+                        .xssProtection()
+                        .and()
+                        .frameOptions().deny() // if you need to embed your app elsewhere, change 'deny' to 'sameOrigin'
+                )
+
+                // CORS Configuration
+                .cors(cors -> cors
+                        .configurationSource(corsConfigurationSource()))
+
+                // Authorization Requests - Ensure the most specific paths are at the top
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers(
+                                "/",
                                 "/home",
                                 "/login",
-                                "/static/**", // This allows access to all static resources
+                                "/static/**",
                                 "/css/**",
                                 "/js/**",
                                 "/images/**",
                                 "/webjars/**",
                                 "/favicon.ico",
                                 "/manifest.json")
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-
-                // Content Security and XSS Protection
-                .headers(headers -> headers
-                        .contentSecurityPolicy("form-action 'self';").and()
-                        .xssProtection())
-
-                // CORS Configuration
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-
-                // Authorization Requests
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/home", "/login", "/static/**", "/manifest.json", "/favicon.ico")
                         .permitAll()
                         .anyRequest().authenticated())
 
