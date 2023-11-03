@@ -99,16 +99,6 @@
 			</plugin>
 
 		</plugins>
-		<resources>
-			<resource>
-				<directory>/var/lib/jenkins/workspace/Chills_FrontEnd/build</directory>
-				<targetPath>META-INF/resources</targetPath> <!-- for Servlet 3.0+ containers -->
-				<includes>
-					<include>**/*</include> <!-- Include all files in the build directory -->
-				</includes>
-			</resource>
-			<!-- Other resources -->
-		</resources>
 	</build>
 	<profiles>
 		<profile>

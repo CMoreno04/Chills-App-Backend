@@ -12,14 +12,12 @@ import com.chillisrestaurant.app.security.dao.request.CustomerSignUpRequest;
 import com.chillisrestaurant.app.security.dao.request.CustomerSigninRequest;
 import com.chillisrestaurant.app.security.dao.request.EmployeeSignUpRequest;
 import com.chillisrestaurant.app.security.dao.request.EmployeeSigninRequest;
-import com.chillisrestaurant.app.security.dao.request.SigninRequest;
 import com.chillisrestaurant.app.security.dao.response.JwtAuthenticationResponse;
 import com.chillisrestaurant.app.security.dao.response.RegisteredResponse;
 import com.chillisrestaurant.app.services.AuthenticationService;
 
 @RestController
 @RequestMapping("auth")
-@CrossOrigin(origins = "http://192.168.0.5:8082")
 public class AuthenticationController {
 
     @Autowired
