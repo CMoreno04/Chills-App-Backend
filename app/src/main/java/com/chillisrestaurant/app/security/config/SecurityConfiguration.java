@@ -40,10 +40,9 @@ public class SecurityConfiguration {
                                 // CSRF Configuration
                                 .csrf(csrf -> csrf
                                                 .ignoringRequestMatchers(
-                                                                "/login",
-                                                                "/some/external/api")
+                                                                "/login","/")
                                                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-                                                
+
                                 // CORS Configuration
                                 .cors(cors -> cors
                                                 .configurationSource(request -> new CorsConfiguration()
@@ -51,7 +50,8 @@ public class SecurityConfiguration {
 
                                 // Authorization Configuration
                                 .authorizeHttpRequests(authorize -> authorize
-                                                .requestMatchers("/", "/home", "/login", "/static/**", "/css/**", "/js/**",
+                                                .requestMatchers("/", "/home", "/login", "/static/**", "/css/**",
+                                                                "/js/**",
                                                                 "/images/**")
                                                 .permitAll()
                                                 .requestMatchers("/api/**").authenticated()
