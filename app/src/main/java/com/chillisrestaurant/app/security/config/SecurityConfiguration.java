@@ -3,7 +3,6 @@ package com.chillisrestaurant.app.security.config;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -30,92 +28,85 @@ import com.chillisrestaurant.app.services.UserService;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+        @Autowired
+        private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Autowired
-    private UserService userService;
+        @Autowired
+        private UserService userService;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                // CSRF Configuration - Only disable CSRF for specific endpoints if absolutely
-                // necessary
-                .csrf(csrf -> csrf.ignoringRequestMatchers(
-                        "/login", // typically, you'd only disable CSRF for endpoints that are used by external
-                                  // clients that can't handle CSRF
-                        "/some/external/api"
-                // add other paths that are used for server-to-server communication or that
-                // require stateless operation
-                )
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                // CSRF Configuration
+                                .csrf(csrf -> csrf
+                                                .ignoringRequestMatchers(
+                                                                "/login",
+                                                                "/some/external/api")
+                                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                                                
+                                // CORS Configuration
+                                .cors(cors -> cors
+                                                .configurationSource(request -> new CorsConfiguration()
+                                                                .applyPermitDefaultValues()))
 
-                // Content Security and XSS Protection
-                .headers(headers -> headers
-                        .contentSecurityPolicy("form-action 'self';").and()
-                        .xssProtection()
-                        .and()
-                        .frameOptions().deny() // if you need to embed your app elsewhere, change 'deny' to 'sameOrigin'
-                )
+                                // Authorization Configuration
+                                .authorizeHttpRequests(authorize -> authorize
+                                                .requestMatchers("/", "/home", "/login", "/static/**", "/css/**", "/js/**",
+                                                                "/images/**")
+                                                .permitAll()
+                                                .requestMatchers("/api/**").authenticated()
+                                                .anyRequest().authenticated())
 
-                // CORS Configuration
-                .cors(cors -> cors
-                        .configurationSource(corsConfigurationSource()))
+                                // Session Management
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/api/**").authenticated() // Assuming '/api/**' is for REST endpoints
-                        .requestMatchers("/", "/home", "/login", "/static/**", "/css/**", "/js/**", "/images/**")
-                        .permitAll()
-                        .anyRequest().authenticated())
+                                // Authentication Provider
+                                .authenticationProvider(authenticationProvider())
 
-                // Session Management
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                // JWT Filter
+                                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-                // Authentication Provider
-                .authenticationProvider(authenticationProvider())
+                return http.build();
+        }
 
-                // JWT Filter
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        // Bean for CORS configuration
+        @Bean
+        CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.setAllowedOrigins(Arrays.asList("*")); // Permit access from localhost:3000
+                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // Include
+                                                                                                                    // PATCH
+                                                                                                                    // if
+                                                                                                                    // needed
+                configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With",
+                                "accept",
+                                "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
+                configuration.setExposedHeaders(Arrays.asList("Authorization"));
+                configuration.setAllowCredentials(true);
+                configuration.setMaxAge(3600L); // Set max age to 1 hour
 
-        return http.build();
-    }
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration); // Apply this configuration to all routes
+                return source;
+        }
 
-    // Bean for CORS configuration
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*")); // Permit access from localhost:3000
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // Include
-                                                                                                            // PATCH if
-                                                                                                            // needed
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "accept",
-                "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
-        configuration.setExposedHeaders(Arrays.asList("Authorization"));
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L); // Set max age to 1 hour
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Apply this configuration to all routes
-        return source;
-    }
+        @Bean
+        public AuthenticationProvider authenticationProvider() {
+                DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+                authProvider.setUserDetailsService(userService.userDetailsService());
+                authProvider.setPasswordEncoder(passwordEncoder());
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+                return authProvider;
+        }
 
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userService.userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
-
-        return authProvider;
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+                return config.getAuthenticationManager();
+        }
 }
