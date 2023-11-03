@@ -7,8 +7,8 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class SpaRedirectController {
 
-    @RequestMapping(value = "/**/{[path:[^\\.]*}")
+    @RequestMapping(value = "/}")
     public RedirectView redirect() {
-        return new RedirectView("/");
+        return new RedirectView("/login");
     }
 }
