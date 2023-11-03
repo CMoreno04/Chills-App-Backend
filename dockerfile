@@ -5,7 +5,7 @@ FROM arm32v7/eclipse-temurin:17-jdk-focal
 WORKDIR /app
 
 # Copy the WAR file into the container at /app
-COPY ./target/my-spring-boot-app-*.war /app/app.war
+COPY app/target/app-0.0.1-SNAPSHOT.war /app/app.war
 
 # Specify the port the container should expose
 EXPOSE 8080
