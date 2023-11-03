@@ -11,7 +11,7 @@ services:
         - SPRING_DATASOURCE_USERNAME=root
         - SPRING_DATASOURCE_PASSWORD=rootroot
         - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
-        - SPRING_JPA_HIBERNATE_DDL_AUTO=updatex
+        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
         - SPRING_JPA_SHOW_SQL=true
         - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MariaDBDialect
         - SPRING_JPA_HIBERNATE_NAMING_PHYSICAL_STRATEGY=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
