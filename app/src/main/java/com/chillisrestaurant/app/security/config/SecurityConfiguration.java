@@ -37,9 +37,10 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+
                 // CSRF Configuration
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/v1/auth/**")
+                        .ignoringRequestMatchers("/api/v1/auth/**", "/", "/login")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                 // Content Security and XSS Protection
@@ -52,7 +53,7 @@ public class SecurityConfiguration {
 
                 // Authorization Requests
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/static/**", "/build/**", "/favicon.ico", "/manifest.json").permitAll()
+                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().authenticated())
 
                 // Session Management
