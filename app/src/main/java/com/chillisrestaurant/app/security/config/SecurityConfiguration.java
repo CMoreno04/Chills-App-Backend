@@ -41,7 +41,8 @@ public class SecurityConfiguration {
                                 // CSRF Configuration
                                 .csrf(csrf -> csrf
                                                 .ignoringRequestMatchers(
-                                                                "/login", "/")
+                                                                new AntPathRequestMatcher("/login"))
+                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/"))
                                                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                                 // CORS Configuration
