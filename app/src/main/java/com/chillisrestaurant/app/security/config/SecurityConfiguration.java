@@ -86,24 +86,24 @@ public class SecurityConfiguration {
                 // defaultConfig.setAllowedMethods(Arrays.asList("GET", "POST"));
 
                 // Specific CORS configuration for /api/v1/auth/signin/employee
-                CorsConfiguration authConfig = new CorsConfiguration();
-                authConfig.setAllowedOrigins(Arrays.asList("*")); // Allow all origins
-                authConfig.setAllowedMethods(Arrays.asList("GET", "POST")); // Allow only GET and POST
-                authConfig.setAllowedHeaders(Arrays.asList("*")); // Allow all headers
-                authConfig.setExposedHeaders(Arrays.asList("Authorization"));
-                authConfig.setAllowCredentials(true);
-                authConfig.setMaxAge(3600L);
+                // CorsConfiguration authConfig = new CorsConfiguration();
+                // authConfig.setAllowedOrigins(Arrays.asList("*")); // Allow all origins
+                // authConfig.setAllowedMethods(Arrays.asList("GET", "POST")); // Allow only GET and POST
+                // authConfig.setAllowedHeaders(Arrays.asList("*")); // Allow all headers
+                // authConfig.setExposedHeaders(Arrays.asList("Authorization"));
+                // authConfig.setAllowCredentials(true);
+                // authConfig.setMaxAge(3600L);
 
-                // Specific CORS configuration for another route
-                CorsConfiguration anotherRouteConfig = new CorsConfiguration();
-                anotherRouteConfig.setAllowedOrigins(Arrays.asList("**", "172.20.0.2:8082", "192.168.0.5:8082"));
-                anotherRouteConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
+                // // Specific CORS configuration for another route
+                // CorsConfiguration anotherRouteConfig = new CorsConfiguration();
+                // anotherRouteConfig.setAllowedOrigins(Arrays.asList("**", "172.20.0.2:8082", "192.168.0.5:8082"));
+                // anotherRouteConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
                 // ...other configurations for this route
 
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration("/auth/signin/employee", authConfig); // Apply authConfig to
+                // source.registerCorsConfiguration("/auth/signin/employee", authConfig); // Apply authConfig to
                                                                                               // this path
-                source.registerCorsConfiguration("/api/**", anotherRouteConfig); // Apply anotherRouteConfig to another
+                // source.registerCorsConfiguration("/api/**", anotherRouteConfig); // Apply anotherRouteConfig to another
                                                                                  // path
                 source.registerCorsConfiguration("/**", defaultConfig); // Apply defaultConfig to all other routes
 
