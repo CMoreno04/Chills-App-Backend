@@ -78,7 +78,7 @@ public class SecurityConfiguration {
         @Bean
         CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
-                configuration.setAllowedOrigins(Arrays.asList("**","http://172.20.0.2","http://192.168.0.5:8082/*"));
+                configuration.setAllowedOrigins(Arrays.asList("**", "http://172.20.0.2", "http://192.168.0.5:8082/*"));
                 configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                 configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With",
                                 "accept",
@@ -89,7 +89,21 @@ public class SecurityConfiguration {
                 configuration.setMaxAge(3600L); // Set max age to 1 hour
 
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration("/**", configuration); // Apply this configuration to all routes
+                source.registerCorsConfiguration("/api/**", configuration); // Apply this configuration to all routes
+
+                configuration.setAllowedOrigins(Arrays.asList("*")); // Allow all origins
+                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+
+                // If you want to allow any headers, you can use "*"
+                configuration.setAllowedHeaders(Arrays.asList("*"));
+
+                configuration.setExposedHeaders(Arrays.asList("Authorization"));
+                configuration.setAllowCredentials(true);
+                configuration.setMaxAge(3600L); // Set max age to 1 hour
+
+                // Apply this configuration only to the specific path
+                source.registerCorsConfiguration("/auth/**", configuration);
+
                 return source;
         }
 
