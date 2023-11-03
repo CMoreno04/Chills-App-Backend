@@ -97,45 +97,11 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<workingDirectory>${project.basedir}/src/main/frontend</workingDirectory>
-							<executable>npm</executable>
-							<arguments>
-								<argument>install</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>npm run build</id>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<workingDirectory>${project.basedir}/src/main/frontend</workingDirectory>
-							<executable>npm</executable>
-							<arguments>
-								<argument>run</argument>
-								<argument>build</argument>
-							</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+
 		</plugins>
 		<resources>
 			<resource>
-				<directory>app/src/main/resources/static</directory>
+				<directory>src/main/resources/static</directory>
 				<targetPath>META-INF/resources</targetPath> <!-- for Servlet 3.0+ containers -->
 				<includes>
 					<include>**/*</include> <!-- Include all files in the build directory -->
@@ -161,5 +127,5 @@
 			</build>
 		</profile>
 	</profiles>
-	
+
 </project>
