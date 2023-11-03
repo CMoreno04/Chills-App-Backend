@@ -96,12 +96,12 @@ public class SecurityConfiguration {
 
                 // Specific CORS configuration for another route
                 CorsConfiguration anotherRouteConfig = new CorsConfiguration();
-                anotherRouteConfig.setAllowedOrigins(Arrays.asList("**", "http://172.20.0.2:8082", "http://192.168.0.5:8082"));
+                anotherRouteConfig.setAllowedOrigins(Arrays.asList("**", "172.20.0.2:8082", "192.168.0.5:8082"));
                 anotherRouteConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
                 // ...other configurations for this route
 
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration("/api/v1/auth/signin/employee", authConfig); // Apply authConfig to
+                source.registerCorsConfiguration("/auth/signin/employee", authConfig); // Apply authConfig to
                                                                                               // this path
                 source.registerCorsConfiguration("/api/**", anotherRouteConfig); // Apply anotherRouteConfig to another
                                                                                  // path
