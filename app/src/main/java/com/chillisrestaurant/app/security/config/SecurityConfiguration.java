@@ -62,20 +62,9 @@ public class SecurityConfiguration {
                 .cors(cors -> cors
                         .configurationSource(corsConfigurationSource()))
 
-                // Authorization Requests - Ensure the most specific paths are at the top
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers(
-                                "/",
-                                "/home",
-                                "/login",
-                                "/static/**",
-                                "/css/**",
-                                "/js/**",
-                                "/images/**",
-                                "/webjars/**",
-                                "/favicon.ico",
-                                "/manifest.json")
+                .authorizeRequests(authorize -> authorize
+                        .requestMatchers("/api/**").authenticated() // Assuming '/api/**' is for REST endpoints
+                        .requestMatchers("/", "/home", "/login", "/static/**", "/css/**", "/js/**", "/images/**")
                         .permitAll()
                         .anyRequest().authenticated())
 
