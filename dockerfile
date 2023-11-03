@@ -8,7 +8,7 @@ WORKDIR /app
 COPY app/target/app-0.0.1-SNAPSHOT.war /app/app.war
 
 # Specify the port the container should expose
-EXPOSE 8080
+EXPOSE 8081
 
 # Use the "java" command to run the application
 ENTRYPOINT ["java", "-jar", "app.war"]
