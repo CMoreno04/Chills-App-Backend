@@ -19,7 +19,7 @@ import com.chillisrestaurant.app.services.AuthenticationService;
 
 @RestController
 @RequestMapping("auth")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://192.168.0.5:8082")
 public class AuthenticationController {
 
     @Autowired
