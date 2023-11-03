@@ -40,7 +40,16 @@ public class SecurityConfiguration {
 
                 // CSRF Configuration
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/v1/auth/**", "/", "/login")
+                        .ignoringRequestMatchers(  "/", 
+                        "/home", 
+                        "/login", 
+                        "/static/**", // This allows access to all static resources
+                        "/css/**", 
+                        "/js/**", 
+                        "/images/**", 
+                        "/webjars/**", 
+                        "/favicon.ico", 
+                        "/manifest.json")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                 // Content Security and XSS Protection
@@ -53,7 +62,8 @@ public class SecurityConfiguration {
 
                 // Authorization Requests
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/", "/home", "/login", "/static/**", "/manifest.json", "/favicon.ico")
+                        .permitAll()
                         .anyRequest().authenticated())
 
                 // Session Management
