@@ -96,7 +96,7 @@ public class SecurityConfiguration {
 
                 // Specific CORS configuration for another route
                 CorsConfiguration anotherRouteConfig = new CorsConfiguration();
-                anotherRouteConfig.setAllowedOrigins(Arrays.asList("**", "http://172.20.0.2", "http://192.168.0.5"));
+                anotherRouteConfig.setAllowedOrigins(Arrays.asList("**", "http://172.20.0.2:8082", "http://192.168.0.5:8082"));
                 anotherRouteConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
                 // ...other configurations for this route
 
