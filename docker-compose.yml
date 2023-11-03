@@ -5,11 +5,9 @@ services:
     image: chillisrestaurant-app:latest
     ports:
       - "8081:8081"
-    extra_hosts:
-    - "host.docker.internal:host-gateway"
     environment:
       - SERVER_PORT=8081
-      - SPRING_DATASOURCE_URL=jdbc:mariadb://host.docker.internal:3306/chillisdb?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://192.168.0.5:3306/chillisdb?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=rootroot
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
