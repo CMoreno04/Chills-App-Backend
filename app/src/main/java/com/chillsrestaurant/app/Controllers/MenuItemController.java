@@ -14,7 +14,7 @@ import com.chillsrestaurant.app.Services.MenuItemService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("/food")
+@RequestMapping("/api/food")
 public class MenuItemController {
 
     @Autowired
