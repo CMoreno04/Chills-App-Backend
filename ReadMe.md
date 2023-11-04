@@ -1,4 +1,4 @@
-# Chilli's Restaurant Backend
+# Chills Restaurant Backend
 
 This is a simple backend in Spring Boot that uses a MySQL database for persistence.
 
