@@ -40,9 +40,7 @@ public class SecurityConfiguration {
                 http
                                 // CSRF Configuration
                                 .csrf(csrf -> csrf
-                                                .ignoringRequestMatchers(
-                                                                new AntPathRequestMatcher("/login"))
-                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/api/auth/**"))
+                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/auth/**"))
                                                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                                 // CORS Configuration
@@ -50,16 +48,8 @@ public class SecurityConfiguration {
 
                                 // Authorization Configuration
                                 .authorizeHttpRequests(authorize -> authorize
-                                                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
-                                                .requestMatchers(new AntPathRequestMatcher("/api/auth/**"))
-                                                .permitAll()
-                                                .requestMatchers(new AntPathRequestMatcher("/home")).permitAll()
-                                                .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
-                                                .requestMatchers(new AntPathRequestMatcher("/static/**")).permitAll()
-                                                .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
-                                                .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
-                                                .requestMatchers(new AntPathRequestMatcher("/images/**")).permitAll()
-                                                .anyRequest().authenticated())
+                                                .requestMatchers(new AntPathRequestMatcher("/auth/**"))
+                                                .permitAll().anyRequest().authenticated())
 
                                 // Session Management
                                 .sessionManagement(session -> session
@@ -76,30 +66,39 @@ public class SecurityConfiguration {
 
         @Bean
         CorsConfigurationSource corsConfigurationSource() {
-            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    
-            CorsConfiguration authConfiguration = new CorsConfiguration();
-            authConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000","https://192.168.0.5:8443",
-            "https://localhost:8443","chills.restaurant")); // Specify exact origins
-            authConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-            authConfiguration.setAllowedHeaders(Arrays.asList("*")); // Or specify exact headers you need
-            authConfiguration.setAllowCredentials(true);
-            authConfiguration.setMaxAge(3600L); // Set max age to 1 hour
-    
-            source.registerCorsConfiguration("/auth/signin/employee/**", authConfiguration); // Apply this configuration to your specific endpoint
-    
-            CorsConfiguration defaultConfiguration = new CorsConfiguration();
-            defaultConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000","https://192.168.0.5:8443",
-            "https://localhost:8443","chills.restaurant"));
-            defaultConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-            defaultConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", "X-XSRF-TOKEN"));
-            defaultConfiguration.setExposedHeaders(Arrays.asList("Authorization"));
-            defaultConfiguration.setAllowCredentials(true);
-            defaultConfiguration.setMaxAge(3600L); // Set max age to 1 hour
-    
-            source.registerCorsConfiguration("/api/**", defaultConfiguration); // Apply this configuration to all other routes
-    
-            return source;
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+                CorsConfiguration authConfiguration = new CorsConfiguration();
+                authConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
+                                "https://192.168.0.5:8443",
+                                "https://localhost:8443", "chills.restaurant")); // Specify exact origins
+                authConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+                authConfiguration.setAllowedHeaders(Arrays.asList("*")); // Or specify exact headers you need
+                authConfiguration.setAllowCredentials(true);
+                authConfiguration.setMaxAge(3600L); // Set max age to 1 hour
+
+                source.registerCorsConfiguration("/auth/signin/employee/**", authConfiguration); // Apply this
+                                                                                                 // configuration to
+                                                                                                 // your specific
+                                                                                                 // endpoint
+
+                CorsConfiguration defaultConfiguration = new CorsConfiguration();
+                defaultConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
+                                "https://192.168.0.5:8443",
+                                "https://localhost:8443", "chills.restaurant"));
+                defaultConfiguration
+                                .setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+                defaultConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type",
+                                "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+                                "Access-Control-Request-Headers", "X-XSRF-TOKEN"));
+                defaultConfiguration.setExposedHeaders(Arrays.asList("Authorization"));
+                defaultConfiguration.setAllowCredentials(true);
+                defaultConfiguration.setMaxAge(3600L); // Set max age to 1 hour
+
+                source.registerCorsConfiguration("/**", defaultConfiguration); // Apply this configuration to all other
+                                                                               // routes
+
+                return source;
         }
 
         @Bean

@@ -12,7 +12,7 @@ import com.chillisrestaurant.app.entities.FoodProductDTO;
 import com.chillisrestaurant.app.services.FoodProductService;
 
 @RestController
-@RequestMapping("/api/food")
+@RequestMapping("/food")
 public class FoodProductController {
 
     @Autowired
