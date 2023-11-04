@@ -78,7 +78,7 @@ public class SecurityConfiguration {
                 CorsConfiguration authConfiguration = new CorsConfiguration();
                 authConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
                                 "https://192.168.0.5:8443",
-                                "https://localhost:8443", "https://chills.restaurant","https://localhost:8081")); // Specify exact origins
+                                "https://localhost:8443", "https://chills.restaurant","https://localhost:8081","https://24.137.244.252:443","*")); // Specify exact origins
                 authConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                 authConfiguration.setAllowedHeaders(Arrays.asList("*")); // Or specify exact headers you need
                 authConfiguration.setAllowCredentials(true);
@@ -92,7 +92,7 @@ public class SecurityConfiguration {
                 CorsConfiguration defaultConfiguration = new CorsConfiguration();
                 defaultConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
                                 "https://192.168.0.5:8443",
-                                "https://localhost:8443", "https://chills.restaurant","https://localhost:8081"));
+                                "https://localhost:8443", "https://chills.restaurant","https://localhost:8081","https://24.137.244.252:443","*"));
                 defaultConfiguration
                                 .setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                 defaultConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type",
