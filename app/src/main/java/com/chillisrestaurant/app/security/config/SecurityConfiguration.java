@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                                 .csrf(csrf -> csrf
                                                 .ignoringRequestMatchers(
                                                                 new AntPathRequestMatcher("/login"))
-                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/auth/**"))
+                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/api/auth/**"))
                                                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                                 // CORS Configuration
@@ -51,7 +51,7 @@ public class SecurityConfiguration {
                                 // Authorization Configuration
                                 .authorizeHttpRequests(authorize -> authorize
                                                 .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
-                                                .requestMatchers(new AntPathRequestMatcher("/auth/**"))
+                                                .requestMatchers(new AntPathRequestMatcher("/api/auth/**"))
                                                 .permitAll()
                                                 .requestMatchers(new AntPathRequestMatcher("/home")).permitAll()
                                                 .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
