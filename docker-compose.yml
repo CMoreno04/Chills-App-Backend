@@ -49,6 +49,7 @@ services:
     restart: unless-stopped
     networks:
       app-network:
+        ipv4_address: 172.20.1.12
 
   nginx-proxy:
     image: nginx:alpine
