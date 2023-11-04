@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.chillsrestaurant.app.Entities.MenuItemDTO;
 import com.chillsrestaurant.app.Services.MenuItemService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/food")
 public class MenuItemController {
@@ -19,6 +21,7 @@ public class MenuItemController {
     private MenuItemService MenuItemService;
 
     @GetMapping("/all")
+     @Operation(summary = "Provides All Menu Items in Database")
     public ResponseEntity<List<MenuItemDTO>> getAllMenuItems() {
         return  ResponseEntity.ok(this.MenuItemService.getAllProducts());
     }

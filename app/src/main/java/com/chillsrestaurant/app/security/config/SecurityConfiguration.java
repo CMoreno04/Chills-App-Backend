@@ -41,6 +41,8 @@ public class SecurityConfiguration {
                                 // CSRF Configuration
                                 .csrf(csrf -> csrf
                                                 .ignoringRequestMatchers(new AntPathRequestMatcher("/auth/**"))
+                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"))
+                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
                                                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                                 // CORS Configuration
@@ -48,7 +50,9 @@ public class SecurityConfiguration {
 
                                 // Authorization Configuration
                                 .authorizeHttpRequests(authorize -> authorize
-                                                .requestMatchers(new AntPathRequestMatcher("/auth/**"))
+                                                .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
                                                 .permitAll().anyRequest().authenticated())
 
                                 // Session Management
@@ -67,11 +71,14 @@ public class SecurityConfiguration {
         @Bean
         CorsConfigurationSource corsConfigurationSource() {
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
+                
+                CorsConfiguration openApiConfig = new CorsConfiguration();
+                source.registerCorsConfiguration("/v3/api-docs", openApiConfig.applyPermitDefaultValues()); // Apply this
+                
                 CorsConfiguration authConfiguration = new CorsConfiguration();
                 authConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
                                 "https://192.168.0.5:8443",
-                                "https://localhost:8443", "chills.restaurant")); // Specify exact origins
+                                "https://localhost:8443", "https://chills.restaurant","https://localhost:8081")); // Specify exact origins
                 authConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                 authConfiguration.setAllowedHeaders(Arrays.asList("*")); // Or specify exact headers you need
                 authConfiguration.setAllowCredentials(true);
@@ -85,7 +92,7 @@ public class SecurityConfiguration {
                 CorsConfiguration defaultConfiguration = new CorsConfiguration();
                 defaultConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
                                 "https://192.168.0.5:8443",
-                                "https://localhost:8443", "chills.restaurant"));
+                                "https://localhost:8443", "https://chills.restaurant","https://localhost:8081"));
                 defaultConfiguration
                                 .setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                 defaultConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type",
