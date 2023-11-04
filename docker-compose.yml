@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   chillis-restaurant-backend:
-    image: chillisrestaurant-app:latest
+    image: chillsrestaurant-app:latest
     ports:
       - "8081:8081"
     environment:
@@ -16,7 +16,7 @@ services:
         - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MariaDBDialect
         - SPRING_JPA_HIBERNATE_NAMING_PHYSICAL_STRATEGY=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK=INFO
-        - LOGGING_LEVEL_COM_CHILLISRESTAURANT=DEBUG
+        - LOGGING_LEVEL_COM_chillsrestaurant=DEBUG
         - SPRING_DEVTOOLS_RESTART_ENABLED=true
         - TOKEN_SIGNING_KEY=413F4428472B4B6250655368566D5970337336763979244226452948404D6351
         - SERVER_SSL_KEY-STORE=src/main/resources/keystore.p12

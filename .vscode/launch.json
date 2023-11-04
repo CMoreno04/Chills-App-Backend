@@ -5,7 +5,7 @@
             "name": "Spring Boot-AppApplication<app>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "mainClass": "com.chillisrestaurant.app.AppApplication",
+            "mainClass": "com.chillsrestaurant.app.AppApplication",
             "projectName": "app",
             "args": "",
             "envFile": "${workspaceFolder}/.env"

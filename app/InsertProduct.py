@@ -18,7 +18,7 @@ for product in products:
 # Using context managers to manage connection and cursor
 with pymysql.connect(host='127.0.0.1', user='root', password='rootroot', database='chillisdb') as connection:
     with connection.cursor() as cursor:
-        sql = "INSERT INTO FoodProduct (name, price, description, imageBlob,category) VALUES (%s, %s, %s, %s,%s)"
+        sql = "INSERT INTO MenuItem (name, price, description, imageBlob,category) VALUES (%s, %s, %s, %s,%s)"
         
         # Bulk insert using executemany
         cursor.executemany(sql, [(product["name"], product["price"], product["description"], product["imageBlob"],product["category"]) for product in products])
