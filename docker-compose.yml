@@ -61,6 +61,7 @@ services:
       - /home/cmoreno/Docker_Nginx:/etc/nginx/certs:ro
     networks:
       app-network:
+        ipv4_address: 172.20.1.13
 
 volumes:
   mariadb-data:
