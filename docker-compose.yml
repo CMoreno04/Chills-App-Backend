@@ -6,7 +6,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-        - SERVER_PORT=8081
+        - SERVER_PORT=8443
         - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/chillisdb?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
         - SPRING_DATASOURCE_USERNAME=root
         - SPRING_DATASOURCE_PASSWORD=rootroot
@@ -19,6 +19,10 @@ services:
         - LOGGING_LEVEL_COM_CHILLISRESTAURANT=DEBUG
         - SPRING_DEVTOOLS_RESTART_ENABLED=true
         - TOKEN_SIGNING_KEY=413F4428472B4B6250655368566D5970337336763979244226452948404D6351
+        - SERVER_SSL_KEY-STORE=src/main/resources/keystore.p12
+        - SERVER_SSL_KEY-STORE-PASSWORD=Cjmv1329!
+        - SERVER_SSL_KEY-STORE-TYPE=PKCS12
+        - SERVER_SSL_KEY-ALIAS=tomcat
     networks:
       app-network:
         ipv4_address: 172.20.1.10
@@ -41,8 +45,18 @@ services:
     ports:
       - "8082:8082"
     environment:
-      - REACT_APP_API_URL=http://172.20.1.10:8081
+      - REACT_APP_API_URL=https://172.20.1.10:8081
     restart: unless-stopped
+    networks:
+      app-network:
+
+  nginx-proxy:
+    image: nginx:alpine
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - /home/cmoreno/Docker_Nginx:/etc/nginx/certs:ro
     networks:
       app-network:
 
