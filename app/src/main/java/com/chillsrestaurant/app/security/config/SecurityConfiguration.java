@@ -40,7 +40,7 @@ public class SecurityConfiguration {
                 http
                                 // CSRF Configuration
                                 .csrf(csrf -> csrf
-                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/auth/**"))
+                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/api/auth/**"))
                                                 .ignoringRequestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"))
                                                 .ignoringRequestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
                                                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
@@ -50,7 +50,7 @@ public class SecurityConfiguration {
 
                                 // Authorization Configuration
                                 .authorizeHttpRequests(authorize -> authorize
-                                                .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll()
                                                 .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
                                                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
                                                 .permitAll().anyRequest().authenticated())
