@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.chillsrestaurant.app.Entities.MenuItemDTO;
+import com.chillsrestaurant.app.Entities.dto.MenuItemDTO;
 import com.chillsrestaurant.app.Repositories.MenuItemRepository;
 
 @Service
