@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.Controllers;
+package com.chillsrestaurant.app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chillsrestaurant.app.Services.AuthenticationService;
 import com.chillsrestaurant.app.security.dao.request.CustomerSignUpRequest;
 import com.chillsrestaurant.app.security.dao.request.CustomerSigninRequest;
 import com.chillsrestaurant.app.security.dao.request.EmployeeSignUpRequest;
 import com.chillsrestaurant.app.security.dao.request.EmployeeSigninRequest;
 import com.chillsrestaurant.app.security.dao.response.JwtAuthenticationResponse;
 import com.chillsrestaurant.app.security.dao.response.RegisteredResponse;
+import com.chillsrestaurant.app.services.AuthenticationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

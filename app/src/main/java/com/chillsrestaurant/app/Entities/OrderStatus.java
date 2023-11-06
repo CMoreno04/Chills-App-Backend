@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.Entities;
+package com.chillsrestaurant.app.entities;
 
 public enum OrderStatus {
     PENDING,

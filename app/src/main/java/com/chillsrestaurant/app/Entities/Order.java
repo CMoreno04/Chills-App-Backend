@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.Entities;
+package com.chillsrestaurant.app.entities;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +17,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,31 +26,27 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "orders")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long number;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date orderTime;
+    private Date submitTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    private Customer owner;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status; // Assuming an OrderStatus enum is defined elsewhere
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private Customer customer; // Assuming a Customer entity class is defined elsewhere
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private Employee employee; // Assuming an Employee entity class is defined elsewhere
+    private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItems; // Assuming an OrderItem entity class that refers back to Order
+    private List<OrderItem> items;
 
-    // Additional fields like notes, payment details etc.
     private String notes;
 
-    // Constructors, getters, and setters can be omitted for brevity, Lombok annotations will handle them
 }

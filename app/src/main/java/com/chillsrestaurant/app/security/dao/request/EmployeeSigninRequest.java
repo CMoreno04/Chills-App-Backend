@@ -1,5 +1,6 @@
 package com.chillsrestaurant.app.security.dao.request;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

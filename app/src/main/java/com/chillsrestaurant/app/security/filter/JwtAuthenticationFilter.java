@@ -11,8 +11,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.chillsrestaurant.app.Services.JwtService;
-import com.chillsrestaurant.app.Services.UserService;
+import com.chillsrestaurant.app.services.JwtService;
+import com.chillsrestaurant.app.services.UserService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
