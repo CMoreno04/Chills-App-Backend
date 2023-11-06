@@ -1,6 +1,6 @@
 <div align="center">
 <h1 align="center">
-<img src="https://github.com/CMoreno04/Chills-App-Backend/blob/main/app/images/chills_cold.jpg" width="100" />
+<img src="https://github.com/CMoreno04/Chills-App-Backend/blob/main/app/images/chills_cold.jpg" width="500" />
 <br>CHILLS-APP-BACKEND</h1>
 <h3>◦ Chills-App-Backend: Unleash endless possibilities!</h3>
 <h3>◦ Developed with the software and tools below.</h3>
