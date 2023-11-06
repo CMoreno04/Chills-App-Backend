@@ -1,4 +1,5 @@
-package com.chillsrestaurant.app.Controllers;
+package com.chillsrestaurant.app.controllers;
+
 
 import java.util.List;
 
@@ -8,8 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chillsrestaurant.app.Entities.dto.MenuItemDTO;
-import com.chillsrestaurant.app.Services.MenuItemService;
+import com.chillsrestaurant.app.entities.dto.MenuItemDTO;
+import com.chillsrestaurant.app.services.MenuItemService;
 
 import io.swagger.v3.oas.annotations.Operation;
 

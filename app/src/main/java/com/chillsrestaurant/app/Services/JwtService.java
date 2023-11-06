@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.Services;
+package com.chillsrestaurant.app.services;
 
 import org.springframework.security.core.userdetails.UserDetails;
 

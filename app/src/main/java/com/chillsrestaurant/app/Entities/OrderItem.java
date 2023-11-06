@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.Entities;
+package com.chillsrestaurant.app.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,5 +31,5 @@ public class OrderItem {
 
     private int quantity;
     private String specialInstructions;
-    
+
 }

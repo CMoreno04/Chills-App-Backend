@@ -1,4 +1,6 @@
-package com.chillsrestaurant.app.Entities;
+package com.chillsrestaurant.app.entities;
+
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

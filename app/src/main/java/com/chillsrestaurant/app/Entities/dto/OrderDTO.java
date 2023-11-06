@@ -1,4 +1,5 @@
-package com.chillsrestaurant.app.Entities.dto;
+package com.chillsrestaurant.app.entities.dto;
+
 
 import java.util.Date;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.Entities;
+package com.chillsrestaurant.app.entities;
 
 import java.util.Date;
 import java.util.List;
@@ -50,5 +50,6 @@ public class Order {
     // Additional fields like notes, payment details etc.
     private String notes;
 
-    // Constructors, getters, and setters can be omitted for brevity, Lombok annotations will handle them
+    // Constructors, getters, and setters can be omitted for brevity, Lombok
+    // annotations will handle them
 }

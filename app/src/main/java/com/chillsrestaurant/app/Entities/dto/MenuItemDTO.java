@@ -1,8 +1,9 @@
-package com.chillsrestaurant.app.Entities.dto;
+package com.chillsrestaurant.app.entities.dto;
+
 
 import java.util.Base64;
 
-import com.chillsrestaurant.app.Entities.MenuItem;
+import com.chillsrestaurant.app.entities.MenuItem;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

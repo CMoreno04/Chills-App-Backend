@@ -1,18 +1,16 @@
-package com.chillsrestaurant.app.Services.Impl;
+package com.chillsrestaurant.app.services.impl;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.chillsrestaurant.app.Entities.Customer;
-import com.chillsrestaurant.app.Entities.Employee;
-import com.chillsrestaurant.app.Entities.Role;
-import com.chillsrestaurant.app.Repositories.CustomerRepository;
-import com.chillsrestaurant.app.Repositories.EmployeeRepository;
-import com.chillsrestaurant.app.Repositories.UserRepository;
-import com.chillsrestaurant.app.Services.AuthenticationService;
-import com.chillsrestaurant.app.Services.JwtService;
+import com.chillsrestaurant.app.entities.Customer;
+import com.chillsrestaurant.app.entities.Employee;
+import com.chillsrestaurant.app.entities.Role;
+import com.chillsrestaurant.app.repositories.CustomerRepository;
+import com.chillsrestaurant.app.repositories.EmployeeRepository;
+import com.chillsrestaurant.app.repositories.UserRepository;
 import com.chillsrestaurant.app.security.dao.request.CustomerSignUpRequest;
 import com.chillsrestaurant.app.security.dao.request.CustomerSigninRequest;
 import com.chillsrestaurant.app.security.dao.request.EmployeeSignUpRequest;
@@ -20,6 +18,8 @@ import com.chillsrestaurant.app.security.dao.request.EmployeeSigninRequest;
 import com.chillsrestaurant.app.security.dao.request.SignUpRequest;
 import com.chillsrestaurant.app.security.dao.request.SigninRequest;
 import com.chillsrestaurant.app.security.dao.response.JwtAuthenticationResponse;
+import com.chillsrestaurant.app.services.AuthenticationService;
+import com.chillsrestaurant.app.services.JwtService;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -105,4 +105,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 return JwtAuthenticationResponse.builder().role(user.getAuthorities().toArray()[0].toString())
                                 .token(jwt).build();
         }
+
 }

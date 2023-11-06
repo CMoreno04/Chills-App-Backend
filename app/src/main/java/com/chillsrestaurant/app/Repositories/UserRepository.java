@@ -1,11 +1,13 @@
-package com.chillsrestaurant.app.Repositories;
+package com.chillsrestaurant.app.repositories;
+
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.chillsrestaurant.app.Entities.User;
+import com.chillsrestaurant.app.entities.User;
+
 
 
 @Repository

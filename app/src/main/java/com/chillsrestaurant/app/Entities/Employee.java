@@ -1,4 +1,5 @@
-package com.chillsrestaurant.app.Entities;
+package com.chillsrestaurant.app.entities;
+
 
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
