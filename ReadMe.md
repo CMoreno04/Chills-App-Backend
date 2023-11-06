@@ -24,7 +24,6 @@
 - [📍 Overview](#-overview)
 - [📂 repository Structure](#-repository-structure)
 - [⚙️ Modules](#modules)
-- [🚀 Getting Started](#-getting-started)
     - [🔧 Installation](#-installation)
     - [🤖 Running Chills-App-Backend](#-running-Chills-App-Backend)
     - [🧪 Tests](#-tests)
@@ -200,18 +199,6 @@ The Chills-App-Backend repository is a project that provides a backend solution 
 </details>
 
 ---
-
-## 🚀 Getting Started
-
-***Dependencies***
-
-Please ensure you have the following dependencies installed on your system:
-
-`- ℹ️ Dependency 1`
-
-`- ℹ️ Dependency 2`
-
-`- ℹ️ ...`
 
 ### 🔧 Installation
 
