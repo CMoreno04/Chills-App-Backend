@@ -1,7 +1,6 @@
-package com.chillsrestaurant.app.entities;
+package com.chillsrestaurant.app.Entities;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -15,28 +14,24 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED) 
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    @Column(name = "first_name")
+    @Column(name="first_name")
     protected String firstName;
 
-    @Column(name = "last_name")
+    @Column(name="last_name")
     protected String lastName;
 
     @Column(unique = true, nullable = false)
@@ -45,9 +40,6 @@ public class User implements UserDetails {
     protected String password;
 
     protected Role role;
-
-    @Temporal(TemporalType.DATE)
-    protected Date dob;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

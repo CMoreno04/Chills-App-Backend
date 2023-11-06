@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.services;
+package com.chillsrestaurant.app.Services;
 
 import com.chillsrestaurant.app.security.dao.request.SignUpRequest;
 import com.chillsrestaurant.app.security.dao.request.SigninRequest;

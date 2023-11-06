@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.controllers;
+package com.chillsrestaurant.app.Controllers;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chillsrestaurant.app.entities.dto.MenuItemResponse;
-import com.chillsrestaurant.app.services.MenuItemService;
+import com.chillsrestaurant.app.Entities.dto.MenuItemDTO;
+import com.chillsrestaurant.app.Services.MenuItemService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -22,7 +22,7 @@ public class MenuItemController {
 
     @GetMapping("/all")
      @Operation(summary = "Provides All Menu Items in Database")
-    public ResponseEntity<List<MenuItemResponse>> getAllMenuItems() {
+    public ResponseEntity<List<MenuItemDTO>> getAllMenuItems() {
         return  ResponseEntity.ok(this.MenuItemService.getAllProducts());
     }
 }

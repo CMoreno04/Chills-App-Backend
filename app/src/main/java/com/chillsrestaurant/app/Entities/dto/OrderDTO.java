@@ -1,49 +1,44 @@
-package com.chillsrestaurant.app.entities.dto;
+package com.chillsrestaurant.app.Entities.dto;
 
 import java.util.Date;
 import java.util.List;
 
-import com.chillsrestaurant.app.entities.OrderStatus;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@Builder
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 public class OrderDTO {
 
-    private Long number;
-    private Date submitTime;
-    private OrderStatus status;
+    private Long id;
+    private Date orderTime;
+    private String status; // Assuming you want to send the status as a String
     private String notes;
-    private CustomerDTO customer;
-    private List<OrderItemDTO> items;
+    private CustomerDTO customer; // Custom DTO for customer details
+    private EmployeeDTO employee; // Custom DTO for employee details
+    private List<OrderItemDTO> orderItems; // Custom DTO for order items
 
-    @Data
-    @Builder
-    @AllArgsConstructor
+    // Inner DTO classes can be static if they don't need access to the outer class's members
+    @Getter
+    @Setter
     @NoArgsConstructor
     public static class CustomerDTO {
         private Long id;
-        private String name;
+        private String name; // Add other customer details you want to expose via the DTO
     }
 
-    @Data
-    @Builder
-    @AllArgsConstructor
+    @Getter
+    @Setter
     @NoArgsConstructor
     public static class EmployeeDTO {
         private Long id;
-        private String name;
+        private String name; // Add other employee details you want to expose via the DTO
     }
 
-    @Data
-    @Builder
-    @AllArgsConstructor
+    @Getter
+    @Setter
     @NoArgsConstructor
     public static class OrderItemDTO {
         private Long id;
@@ -52,14 +47,14 @@ public class OrderDTO {
         private String specialInstructions;
     }
 
-    @Data
-    public class MenuItemDTO {
-
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class MenuItemDTO {
         private Long id;
-        private double price;
-        private String description;
-        private String name;
-        private String category;
-        private String image;
+        private String name; // Add other menu item details you want to expose via the DTO
+        // ... potentially more fields like price, description, etc.
     }
+    
+    // No-args constructor, getters and setters are handled by Lombok annotations
 }

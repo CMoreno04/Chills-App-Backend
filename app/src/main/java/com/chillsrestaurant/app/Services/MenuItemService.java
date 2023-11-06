@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.services;
+package com.chillsrestaurant.app.Services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.chillsrestaurant.app.entities.dto.MenuItemResponse;
-import com.chillsrestaurant.app.repositories.MenuItemRepository;
+import com.chillsrestaurant.app.Entities.dto.MenuItemDTO;
+import com.chillsrestaurant.app.Repositories.MenuItemRepository;
 
 @Service
 public class MenuItemService {
@@ -15,10 +15,10 @@ public class MenuItemService {
     @Autowired
     private MenuItemRepository MenuItemRepository;
 
-    public List<MenuItemResponse> getAllProducts() {
-        List<MenuItemResponse> productsDtos = new ArrayList<>();
+    public List<MenuItemDTO> getAllProducts() {
+        List<MenuItemDTO> productsDtos = new ArrayList<>();
 
-        this.MenuItemRepository.findAll().stream().forEach(product -> productsDtos.add(null));
+        this.MenuItemRepository.findAll().stream().forEach(product -> productsDtos.add(new MenuItemDTO(product)));
         
         return productsDtos ;
     }
