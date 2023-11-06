@@ -1,6 +1,7 @@
 package com.chillsrestaurant.app.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Entity
 @SuperBuilder
+@Table(name = "customer")
 public class Customer extends User {
     private String username;
 
