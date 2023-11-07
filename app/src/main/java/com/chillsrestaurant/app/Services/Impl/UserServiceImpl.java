@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.chillsrestaurant.app.repositories.UserRepository;
 import com.chillsrestaurant.app.services.UserService;
 
+
 @Service
 public class UserServiceImpl implements UserService {
 

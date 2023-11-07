@@ -11,6 +11,8 @@ import com.chillsrestaurant.app.entities.Role;
 import com.chillsrestaurant.app.repositories.CustomerRepository;
 import com.chillsrestaurant.app.repositories.EmployeeRepository;
 import com.chillsrestaurant.app.repositories.UserRepository;
+import com.chillsrestaurant.app.services.AuthenticationService;
+import com.chillsrestaurant.app.services.JwtService;
 import com.chillsrestaurant.app.security.dao.request.CustomerSignUpRequest;
 import com.chillsrestaurant.app.security.dao.request.CustomerSigninRequest;
 import com.chillsrestaurant.app.security.dao.request.EmployeeSignUpRequest;
@@ -18,13 +20,8 @@ import com.chillsrestaurant.app.security.dao.request.EmployeeSigninRequest;
 import com.chillsrestaurant.app.security.dao.request.SignUpRequest;
 import com.chillsrestaurant.app.security.dao.request.SigninRequest;
 import com.chillsrestaurant.app.security.dao.response.JwtAuthenticationResponse;
-import com.chillsrestaurant.app.services.AuthenticationService;
-import com.chillsrestaurant.app.services.JwtService;
-
-import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
         private final UserRepository userRepository;
@@ -108,5 +105,4 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 return JwtAuthenticationResponse.builder().role(user.getAuthorities().toArray()[0].toString())
                                 .token(jwt).build();
         }
-
 }

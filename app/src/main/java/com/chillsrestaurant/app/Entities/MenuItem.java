@@ -1,7 +1,5 @@
 package com.chillsrestaurant.app.entities;
 
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "menu_item")
+@Table(name="menu_item")
 public class MenuItem {
 
     @Id

@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Entity
 @SuperBuilder
-@Table(name = "customer")
+@Table(name="customer")
 public class Customer extends User {
     private String username;
 

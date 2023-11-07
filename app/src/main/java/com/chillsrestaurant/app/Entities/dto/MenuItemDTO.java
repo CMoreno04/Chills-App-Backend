@@ -1,6 +1,5 @@
 package com.chillsrestaurant.app.entities.dto;
 
-
 import java.util.Base64;
 
 import com.chillsrestaurant.app.entities.MenuItem;

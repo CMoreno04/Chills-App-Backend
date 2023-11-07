@@ -9,12 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import com.chillsrestaurant.app.entities.Employee;
 
+
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     Optional<Employee> findByEmail(String email);
 
     Optional<Employee> findByEmployeeId(String string);
-
+    
     @Query("SELECT e.email FROM Employee e WHERE e.employeeId = :employeeId")
     Optional<String> findEmailByEmployeeId(@Param("employeeId") String employeeId);
 

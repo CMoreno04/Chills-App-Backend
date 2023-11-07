@@ -1,6 +1,5 @@
 package com.chillsrestaurant.app.entities;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -25,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
+@Table(name="user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
