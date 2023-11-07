@@ -14,15 +14,16 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Entity
 @SuperBuilder
-@Table(name="employee")
+@Table(name = "employee")
 public class Employee extends User {
+
     private String employeeId;
 
-    public Integer getId(){
+    public Integer getId() {
         return super.id;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return super.email;
     }
 }

@@ -17,9 +17,13 @@ public class MenuItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private double price;
+
     private String description;
+
     private String name;
+    
     private String category;
 
     @Lob

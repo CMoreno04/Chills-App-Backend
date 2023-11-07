@@ -16,7 +16,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Table(name="customer")
 public class Customer extends User {
+    
     private String username;
+
+    public Integer getId(){
+        return super.id;
+    }
 
     @Override
     public String getUsername() {

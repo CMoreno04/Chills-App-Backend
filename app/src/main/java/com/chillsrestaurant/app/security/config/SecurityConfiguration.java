@@ -76,7 +76,7 @@ public class SecurityConfiguration {
                 source.registerCorsConfiguration("/v3/api-docs", openApiConfig.applyPermitDefaultValues()); // Apply this
                 
                 CorsConfiguration authConfiguration = new CorsConfiguration();
-                authConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
+                authConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000", "http://localhost:3000",
                                 "https://192.168.0.5:8443",
                                 "https://localhost:8443", "https://chills.restaurant","https://localhost:8081","https://24.137.244.252:443")); // Specify exact origins
                 authConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
@@ -90,7 +90,7 @@ public class SecurityConfiguration {
                                                                                                  // endpoint
 
                 CorsConfiguration defaultConfiguration = new CorsConfiguration();
-                defaultConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
+                defaultConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000", "http://localhost:3000",
                                 "https://192.168.0.5:8443",
                                 "https://localhost:8443", "https://chills.restaurant","https://localhost:8081","https://24.137.244.252:443"));
                 defaultConfiguration
@@ -98,7 +98,7 @@ public class SecurityConfiguration {
                 defaultConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type",
                                 "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
                                 "Access-Control-Request-Headers", "X-XSRF-TOKEN"));
-                defaultConfiguration.setExposedHeaders(Arrays.asList("Authorization"));
+                defaultConfiguration.setExposedHeaders(Arrays.asList("Authorization", "X-XSRF-TOKEN"));
                 defaultConfiguration.setAllowCredentials(true);
                 defaultConfiguration.setMaxAge(3600L); // Set max age to 1 hour
 
