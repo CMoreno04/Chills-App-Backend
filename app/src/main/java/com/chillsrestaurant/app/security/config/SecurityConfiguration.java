@@ -16,14 +16,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.chillsrestaurant.app.services.UserService;
 import com.chillsrestaurant.app.security.filter.JwtAuthenticationFilter;
+import com.chillsrestaurant.app.services.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -39,12 +38,12 @@ public class SecurityConfiguration {
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
                                 // CSRF Configuration
-                                .csrf(csrf -> csrf
-                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/api/auth/**"))
-                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"))
-                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
-                                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-
+                                // .csrf(csrf -> csrf
+                                // .ignoringRequestMatchers(new AntPathRequestMatcher("/api/auth/**"))
+                                // .ignoringRequestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"))
+                                // .ignoringRequestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
+                                // .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                                .csrf().disable()
                                 // CORS Configuration
                                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
@@ -89,9 +88,9 @@ public class SecurityConfiguration {
                 authConfiguration.setMaxAge(3600L); // Set max age to 1 hour
 
                 source.registerCorsConfiguration("/api/auth/signin/employee", authConfiguration); // Apply this
-                                                                                                 // configuration to
-                                                                                                 // your specific
-                                                                                                 // endpoint
+                                                                                                  // configuration to
+                                                                                                  // your specific
+                                                                                                  // endpoint
 
                 CorsConfiguration defaultConfiguration = new CorsConfiguration();
                 defaultConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
@@ -101,11 +100,13 @@ public class SecurityConfiguration {
                                 "https://24.137.244.252:443"));
                 defaultConfiguration
                                 .setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-                defaultConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type",
-                                "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method",
-                                "Access-Control-Request-Headers", "X-XSRF-TOKEN"));
-                defaultConfiguration.setExposedHeaders(Arrays.asList("Authorization", "X-XSRF-TOKEN"));
-
+                // defaultConfiguration.setAllowedHeaders(Arrays.asList("Authorization",
+                // "Content-Type",
+                // "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method",
+                // "Access-Control-Request-Headers", "X-XSRF-TOKEN"));
+                // defaultConfiguration.setExposedHeaders(Arrays.asList("Authorization",
+                // "X-XSRF-TOKEN"));
+                defaultConfiguration.setAllowedHeaders(Arrays.asList("*")); // Or specify exact headers you need
                 defaultConfiguration.setAllowCredentials(true);
                 defaultConfiguration.setMaxAge(3600L); // Set max age to 1 hour
 
