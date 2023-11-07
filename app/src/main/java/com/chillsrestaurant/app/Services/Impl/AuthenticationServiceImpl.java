@@ -21,7 +21,10 @@ import com.chillsrestaurant.app.security.dao.response.JwtAuthenticationResponse;
 import com.chillsrestaurant.app.services.AuthenticationService;
 import com.chillsrestaurant.app.services.JwtService;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
         private final UserRepository userRepository;

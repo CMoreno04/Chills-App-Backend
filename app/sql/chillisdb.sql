@@ -141,9 +141,13 @@ CREATE TABLE `orders` (
   `submitTime` datetime(6) DEFAULT NULL,
   `employee_id` int DEFAULT NULL,
   `owner_id` int DEFAULT NULL,
+  `orderTime` datetime(6) DEFAULT NULL,
+  `customer_id` int DEFAULT NULL,
   PRIMARY KEY (`number`),
   KEY `FKog5v9ga2g2ukytypn4ocip6b4` (`employee_id`),
   KEY `FKl42oucp0gye3mir6p4t27veo3` (`owner_id`),
+  KEY `FK624gtjin3po807j3vix093tlf` (`customer_id`),
+  CONSTRAINT `FK624gtjin3po807j3vix093tlf` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
   CONSTRAINT `FKl42oucp0gye3mir6p4t27veo3` FOREIGN KEY (`owner_id`) REFERENCES `customer` (`id`),
   CONSTRAINT `FKog5v9ga2g2ukytypn4ocip6b4` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -202,4 +206,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-06 19:49:01
+-- Dump completed on 2023-11-06 19:58:06
