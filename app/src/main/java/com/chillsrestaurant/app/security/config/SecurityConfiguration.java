@@ -51,7 +51,8 @@ public class SecurityConfiguration {
                                 // Authorization Configuration
                                 .authorizeHttpRequests(authorize -> authorize
                                                 .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll()
-                                                .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"))
+                                                .permitAll()
                                                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
                                                 .permitAll().anyRequest().authenticated())
 
@@ -71,34 +72,40 @@ public class SecurityConfiguration {
         @Bean
         CorsConfigurationSource corsConfigurationSource() {
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                
+
                 CorsConfiguration openApiConfig = new CorsConfiguration();
-                source.registerCorsConfiguration("/v3/api-docs", openApiConfig.applyPermitDefaultValues()); // Apply this
-                
+                source.registerCorsConfiguration("/v3/api-docs", openApiConfig.applyPermitDefaultValues()); // Apply
+                                                                                                            // this
+
                 CorsConfiguration authConfiguration = new CorsConfiguration();
-                authConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000", "http://localhost:3000",
+                authConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
+                                "http://localhost:3000",
                                 "https://192.168.0.5:8443",
-                                "https://localhost:8443", "https://chills.restaurant","https://localhost:8081","https://24.137.244.252:443")); // Specify exact origins
+                                "https://localhost:8443", "https://chills.restaurant", "https://localhost:8081",
+                                "https://24.137.244.252:443")); // Specify exact origins
                 authConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                 authConfiguration.setAllowedHeaders(Arrays.asList("*")); // Or specify exact headers you need
                 authConfiguration.setAllowCredentials(true);
                 authConfiguration.setMaxAge(3600L); // Set max age to 1 hour
 
-                source.registerCorsConfiguration("/auth/signin/employee/**", authConfiguration); // Apply this
+                source.registerCorsConfiguration("/api/auth/signin/employee", authConfiguration); // Apply this
                                                                                                  // configuration to
                                                                                                  // your specific
                                                                                                  // endpoint
 
                 CorsConfiguration defaultConfiguration = new CorsConfiguration();
-                defaultConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000", "http://localhost:3000",
+                defaultConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
+                                "http://localhost:3000",
                                 "https://192.168.0.5:8443",
-                                "https://localhost:8443", "https://chills.restaurant","https://localhost:8081","https://24.137.244.252:443"));
+                                "https://localhost:8443", "https://chills.restaurant", "https://localhost:8081",
+                                "https://24.137.244.252:443"));
                 defaultConfiguration
                                 .setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                 defaultConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type",
-                                "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+                                "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method",
                                 "Access-Control-Request-Headers", "X-XSRF-TOKEN"));
                 defaultConfiguration.setExposedHeaders(Arrays.asList("Authorization", "X-XSRF-TOKEN"));
+
                 defaultConfiguration.setAllowCredentials(true);
                 defaultConfiguration.setMaxAge(3600L); // Set max age to 1 hour
 
