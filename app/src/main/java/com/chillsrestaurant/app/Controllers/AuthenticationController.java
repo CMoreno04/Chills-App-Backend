@@ -1,19 +1,20 @@
 package com.chillsrestaurant.app.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.server.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chillsrestaurant.app.services.AuthenticationService;
 import com.chillsrestaurant.app.security.dao.request.CustomerSignUpRequest;
 import com.chillsrestaurant.app.security.dao.request.CustomerSigninRequest;
 import com.chillsrestaurant.app.security.dao.request.EmployeeSignUpRequest;
 import com.chillsrestaurant.app.security.dao.request.EmployeeSigninRequest;
 import com.chillsrestaurant.app.security.dao.response.JwtAuthenticationResponse;
 import com.chillsrestaurant.app.security.dao.response.RegisteredResponse;
+import com.chillsrestaurant.app.services.AuthenticationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,8 +23,16 @@ import io.swagger.v3.oas.annotations.Parameter;
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
+
+    public AuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
+
+    @GetMapping("/csrf")
+    public CsrfToken getCsrfToken(CsrfToken token) {
+        return token;
+    }
 
     @PostMapping("/signup/employee")
     @Operation(summary = "Provides Registration services to Employees")

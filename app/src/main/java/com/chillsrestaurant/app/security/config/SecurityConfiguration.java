@@ -2,7 +2,6 @@ package com.chillsrestaurant.app.security.config;
 
 import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -28,22 +28,25 @@ import com.chillsrestaurant.app.services.UserService;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-        @Autowired
-        private JwtAuthenticationFilter jwtAuthenticationFilter;
+        private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-        @Autowired
-        private UserService userService;
+        private final UserService userService;
+
+        public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, UserService userService) {
+                this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+                this.userService = userService;
+        }
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
                                 // CSRF Configuration
-                                // .csrf(csrf -> csrf
-                                // .ignoringRequestMatchers(new AntPathRequestMatcher("/api/auth/**"))
-                                // .ignoringRequestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"))
-                                // .ignoringRequestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
-                                // .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-                                .csrf().disable()
+                                .csrf(csrf -> csrf
+                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/api/**"))
+                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"))
+                                                .ignoringRequestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
+                                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+
                                 // CORS Configuration
                                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
@@ -73,45 +76,17 @@ public class SecurityConfiguration {
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
                 CorsConfiguration openApiConfig = new CorsConfiguration();
-                source.registerCorsConfiguration("/v3/api-docs", openApiConfig.applyPermitDefaultValues()); // Apply
-                                                                                                            // this
-
-                CorsConfiguration authConfiguration = new CorsConfiguration();
-                authConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
-                                "http://localhost:3000",
-                                "https://192.168.0.5:8443",
-                                "https://localhost:8443", "https://chills.restaurant", "https://localhost:8081",
-                                "https://24.137.244.252:443")); // Specify exact origins
-                authConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-                authConfiguration.setAllowedHeaders(Arrays.asList("*")); // Or specify exact headers you need
-                authConfiguration.setAllowCredentials(true);
-                authConfiguration.setMaxAge(3600L); // Set max age to 1 hour
-
-                source.registerCorsConfiguration("/api/auth/signin/employee", authConfiguration); // Apply this
-                                                                                                  // configuration to
-                                                                                                  // your specific
-                                                                                                  // endpoint
+                source.registerCorsConfiguration("/v3/api-docs", openApiConfig.applyPermitDefaultValues());
 
                 CorsConfiguration defaultConfiguration = new CorsConfiguration();
-                defaultConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.5:8082", "http://localhost:3000",
-                                "http://localhost:3000",
-                                "https://192.168.0.5:8443",
-                                "https://localhost:8443", "https://chills.restaurant", "https://localhost:8081",
-                                "https://24.137.244.252:443"));
-                defaultConfiguration
-                                .setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-                // defaultConfiguration.setAllowedHeaders(Arrays.asList("Authorization",
-                // "Content-Type",
-                // "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method",
-                // "Access-Control-Request-Headers", "X-XSRF-TOKEN"));
-                // defaultConfiguration.setExposedHeaders(Arrays.asList("Authorization",
-                // "X-XSRF-TOKEN"));
-                defaultConfiguration.setAllowedHeaders(Arrays.asList("*")); // Or specify exact headers you need
+                defaultConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+                defaultConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                defaultConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-XSRF-TOKEN"));
+                defaultConfiguration.setExposedHeaders(Arrays.asList("X-XSRF-TOKEN"));
                 defaultConfiguration.setAllowCredentials(true);
-                defaultConfiguration.setMaxAge(3600L); // Set max age to 1 hour
+                defaultConfiguration.setMaxAge(3600L);
 
-                source.registerCorsConfiguration("/**", defaultConfiguration); // Apply this configuration to all other
-                                                                               // routes
+                source.registerCorsConfiguration("/**", defaultConfiguration); // Apply this configuration to all routes
 
                 return source;
         }

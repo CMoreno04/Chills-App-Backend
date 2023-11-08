@@ -2,7 +2,6 @@ package com.chillsrestaurant.app.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +16,15 @@ import io.swagger.v3.oas.annotations.Operation;
 @RequestMapping("/api/food")
 public class MenuItemController {
 
-    @Autowired
-    private MenuItemService MenuItemService;
+    private final MenuItemService MenuItemService;
+
+    public MenuItemController(com.chillsrestaurant.app.services.MenuItemService menuItemService) {
+        MenuItemService = menuItemService;
+    }
 
     @GetMapping("/all")
-     @Operation(summary = "Provides All Menu Items in Database")
+    @Operation(summary = "Provides All Menu Items in Database")
     public ResponseEntity<List<MenuItemDTO>> getAllMenuItems() {
-        return  ResponseEntity.ok(this.MenuItemService.getAllProducts());
+        return ResponseEntity.ok(this.MenuItemService.getAllProducts());
     }
 }

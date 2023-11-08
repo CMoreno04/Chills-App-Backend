@@ -1,5 +1,9 @@
 package com.chillsrestaurant.app.entities;
 
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +16,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="menu_item")
-public class MenuItem {
+public class MenuItem implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +32,7 @@ public class MenuItem {
 
     @Lob
     @Column(columnDefinition="LONGBLOB")
+    @JsonIgnore
     private byte[] imageBlob;
 
 }

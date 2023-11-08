@@ -2,6 +2,7 @@ package com.chillsrestaurant.app.entities;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,21 +21,21 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED) 
+@Inheritance(strategy = InheritanceType.JOINED)
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="user")
+@Table(name = "user")
 public class User implements UserDetails {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    @Column(name="first_name")
+    @Column(name = "first_name")
     protected String firstName;
 
-    @Column(name="last_name")
+    @Column(name = "last_name")
     protected String lastName;
 
     @Column(unique = true, nullable = false)
@@ -42,7 +43,7 @@ public class User implements UserDetails {
 
     protected String password;
 
-    protected Role role;
+    protected  Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -77,5 +78,34 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    // Implement a toString that is safe against stack overflow
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                '}';
+    }
+
+    // Implement an equals method that only checks id for equality
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof User))
+            return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    // Implement a hashCode method that uses only the id
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
