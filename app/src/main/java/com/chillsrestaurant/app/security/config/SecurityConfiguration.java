@@ -79,7 +79,7 @@ public class SecurityConfiguration {
                 source.registerCorsConfiguration("/v3/api-docs", openApiConfig.applyPermitDefaultValues());
 
                 CorsConfiguration defaultConfiguration = new CorsConfiguration();
-                defaultConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+                defaultConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000","https://chills.restaurant"));
                 defaultConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                 defaultConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-XSRF-TOKEN"));
                 defaultConfiguration.setExposedHeaders(Arrays.asList("X-XSRF-TOKEN"));
