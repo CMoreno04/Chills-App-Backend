@@ -8,18 +8,18 @@ import org.springframework.stereotype.Service;
 import com.chillsrestaurant.app.entities.Customer;
 import com.chillsrestaurant.app.entities.Employee;
 import com.chillsrestaurant.app.entities.Role;
+import com.chillsrestaurant.app.entities.request.CustomerSignUpRequest;
+import com.chillsrestaurant.app.entities.request.CustomerSigninRequest;
+import com.chillsrestaurant.app.entities.request.EmployeeSignUpRequest;
+import com.chillsrestaurant.app.entities.request.EmployeeSigninRequest;
+import com.chillsrestaurant.app.entities.request.SignUpRequest;
+import com.chillsrestaurant.app.entities.request.SigninRequest;
+import com.chillsrestaurant.app.entities.response.JwtAuthenticationResponse;
 import com.chillsrestaurant.app.repositories.CustomerRepository;
 import com.chillsrestaurant.app.repositories.EmployeeRepository;
 import com.chillsrestaurant.app.repositories.UserRepository;
 import com.chillsrestaurant.app.services.AuthenticationService;
 import com.chillsrestaurant.app.services.JwtService;
-import com.chillsrestaurant.app.security.dao.request.CustomerSignUpRequest;
-import com.chillsrestaurant.app.security.dao.request.CustomerSigninRequest;
-import com.chillsrestaurant.app.security.dao.request.EmployeeSignUpRequest;
-import com.chillsrestaurant.app.security.dao.request.EmployeeSigninRequest;
-import com.chillsrestaurant.app.security.dao.request.SignUpRequest;
-import com.chillsrestaurant.app.security.dao.request.SigninRequest;
-import com.chillsrestaurant.app.security.dao.response.JwtAuthenticationResponse;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {

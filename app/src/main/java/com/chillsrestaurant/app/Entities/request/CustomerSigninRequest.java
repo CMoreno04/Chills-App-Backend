@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.security.dao.request;
+package com.chillsrestaurant.app.entities.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeSigninRequest extends SigninRequest{
-    private String employeeId;
+public class CustomerSigninRequest extends SigninRequest{
+    private String username;
 }

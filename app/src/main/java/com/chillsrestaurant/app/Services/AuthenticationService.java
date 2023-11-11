@@ -1,8 +1,8 @@
 package com.chillsrestaurant.app.services;
 
-import com.chillsrestaurant.app.security.dao.request.SignUpRequest;
-import com.chillsrestaurant.app.security.dao.request.SigninRequest;
-import com.chillsrestaurant.app.security.dao.response.JwtAuthenticationResponse;
+import com.chillsrestaurant.app.entities.request.SignUpRequest;
+import com.chillsrestaurant.app.entities.request.SigninRequest;
+import com.chillsrestaurant.app.entities.response.JwtAuthenticationResponse;
 
 public interface AuthenticationService {
     JwtAuthenticationResponse signup(SignUpRequest request);

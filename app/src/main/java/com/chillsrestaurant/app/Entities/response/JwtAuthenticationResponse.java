@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.security.dao.response;
+package com.chillsrestaurant.app.entities.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisteredResponse {
-    private String username;
+public class JwtAuthenticationResponse {
+    private String token;
+    private String role;
 }

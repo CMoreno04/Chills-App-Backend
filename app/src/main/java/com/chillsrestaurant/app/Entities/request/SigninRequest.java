@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.security.dao.request;
+package com.chillsrestaurant.app.entities.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpRequest {
-    private String firstName;
-    private String lastName;
-    private String email;
+public class SigninRequest {
     private String password;
-    private String role;
 }

@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chillsrestaurant.app.security.dao.request.CustomerSignUpRequest;
-import com.chillsrestaurant.app.security.dao.request.CustomerSigninRequest;
-import com.chillsrestaurant.app.security.dao.request.EmployeeSignUpRequest;
-import com.chillsrestaurant.app.security.dao.request.EmployeeSigninRequest;
-import com.chillsrestaurant.app.security.dao.response.JwtAuthenticationResponse;
-import com.chillsrestaurant.app.security.dao.response.RegisteredResponse;
+import com.chillsrestaurant.app.entities.request.CustomerSignUpRequest;
+import com.chillsrestaurant.app.entities.request.CustomerSigninRequest;
+import com.chillsrestaurant.app.entities.request.EmployeeSignUpRequest;
+import com.chillsrestaurant.app.entities.request.EmployeeSigninRequest;
+import com.chillsrestaurant.app.entities.response.JwtAuthenticationResponse;
+import com.chillsrestaurant.app.entities.response.RegisteredResponse;
 import com.chillsrestaurant.app.services.AuthenticationService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,11 +27,6 @@ public class AuthenticationController {
 
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
-    }
-
-    @GetMapping("/csrf")
-    public CsrfToken getCsrfToken(CsrfToken token) {
-        return token;
     }
 
     @PostMapping("/signup/employee")

@@ -1,4 +1,4 @@
-package com.chillsrestaurant.app.security.dao.request;
+package com.chillsrestaurant.app.entities.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

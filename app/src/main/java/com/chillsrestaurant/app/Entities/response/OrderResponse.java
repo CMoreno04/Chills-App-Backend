@@ -1,9 +1,10 @@
-package com.chillsrestaurant.app.entities;
+package com.chillsrestaurant.app.entities.response;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.chillsrestaurant.app.entities.Order;
 import com.chillsrestaurant.app.entities.mapper.OrderMenuItemMapper;
 import com.chillsrestaurant.app.entities.mapper.OrderMenuItemMapperImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;

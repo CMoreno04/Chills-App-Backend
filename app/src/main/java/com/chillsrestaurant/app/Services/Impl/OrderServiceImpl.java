@@ -3,14 +3,15 @@ package com.chillsrestaurant.app.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 
 import com.chillsrestaurant.app.entities.Customer;
 import com.chillsrestaurant.app.entities.Order;
 import com.chillsrestaurant.app.entities.OrderMenuItem;
-import com.chillsrestaurant.app.entities.OrderResponse;
 import com.chillsrestaurant.app.entities.dto.OrderDTO;
 import com.chillsrestaurant.app.entities.mapper.OrderMapper;
+import com.chillsrestaurant.app.entities.response.OrderResponse;
 import com.chillsrestaurant.app.repositories.CustomerRepository;
 import com.chillsrestaurant.app.repositories.OrderMenuItemRepository;
 import com.chillsrestaurant.app.repositories.OrderRepository;
@@ -77,6 +78,17 @@ public class OrderServiceImpl implements OrderService {
     public boolean deleteOrder(Order order) {
         try {
             this.orderRepository.delete(order);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateOrder(OrderDTO updateOrder) {
+        try {
+            this.orderRepository.saveAndFlush(this.orderMapper.orderDtoToOrder(updateOrder));
             return true;
         } catch (Exception e) {
             e.printStackTrace();
