@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.chillsrestaurant.app.entities.Order;
+import com.chillsrestaurant.app.entities.dto.OrderDTO.OrderMenuItemDto;
 import com.chillsrestaurant.app.entities.mapper.OrderMenuItemMapper;
 import com.chillsrestaurant.app.entities.mapper.OrderMenuItemMapperImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,7 +22,7 @@ public class OrderResponse {
     private String submitTime;
     private String owner;
     private String status;
-    private List<Object> items; // You should create a proper DTO for the items as well
+    private List<OrderMenuItemDto> items; 
     private String notes;
 
     public OrderResponse(Order order) {
@@ -29,10 +30,10 @@ public class OrderResponse {
         this.orderMenuItemMapper = new OrderMenuItemMapperImpl();
         this.number = order.getId();
         this.submitTime = dateFormat.format(order.getSubmitTime());
-        this.owner = order.getCustomer().getUsername(); // Assuming Customer has a getName() method
+        this.owner = order.getCustomer().getUsername(); 
         this.status = order.getStatus().name();
         this.items = order.getOrderMenuItems().stream()
-                .map(item -> this.orderMenuItemMapper.orderMenuItemToOrderMenuItemDto(item)) // Convert each OrderMenuItem to DTO                                                               
+                .map(item -> this.orderMenuItemMapper.orderMenuItemToOrderMenuItemDto(item))                                                                 
                 .collect(Collectors.toList());
         this.notes = order.getDetails();
     }
