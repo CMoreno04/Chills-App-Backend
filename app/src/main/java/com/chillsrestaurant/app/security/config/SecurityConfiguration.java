@@ -45,7 +45,7 @@ public class SecurityConfiguration {
                                                 .ignoringRequestMatchers(new AntPathRequestMatcher("/api/**"))
                                                 .ignoringRequestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"))
                                                 .ignoringRequestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
-                                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                                                .csrfTokenRepository( new CookieCsrfTokenRepository()))
 
                                 // CORS Configuration
                                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
