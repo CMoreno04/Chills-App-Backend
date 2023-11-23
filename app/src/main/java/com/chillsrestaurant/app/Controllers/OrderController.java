@@ -2,9 +2,6 @@ package com.chillsrestaurant.app.controllers;
 
 import java.util.List;
 
-import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chillsrestaurant.app.entities.Order;
+import com.chillsrestaurant.app.entities.dto.EditOrderDTO;
 import com.chillsrestaurant.app.entities.dto.OrderDTO;
 import com.chillsrestaurant.app.entities.response.OrderResponse;
 import com.chillsrestaurant.app.services.OrderService;
@@ -54,7 +52,7 @@ public class OrderController {
 
     @PutMapping("/update")
     @Operation(summary = "Updates and Order.")
-    public ResponseEntity<Void> updateOrder(@RequestBody OrderDTO updateOrder) {
+    public ResponseEntity<Void> updateOrder(@RequestBody EditOrderDTO updateOrder) {
         return this.orderService.updateOrder(updateOrder) ? ResponseEntity.ok().build()
                 : ResponseEntity.badRequest().build();
     }
