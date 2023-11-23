@@ -14,10 +14,10 @@ RUN mvn dependency:go-offline
 COPY app/src ./src
 
 # Use Maven to package the application without running tests for speed (you can remove the -DskipTests if needed).
-RUN mvn clean package -DskipTests -P docker
+RUN mvn clean package -DskipTests
 
 # Expose the port that the app runs on.
 EXPOSE 8081
 
 # Run the built Spring Boot application.
-CMD ["java", "-jar", "target/app-0.0.1-SNAPSHOT.war"]
+CMD ["java", "-jar", "target/app-0.0.1-SNAPSHOT.jar"]
