@@ -3,12 +3,13 @@ package com.chillsrestaurant.app.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 
 import com.chillsrestaurant.app.entities.Customer;
 import com.chillsrestaurant.app.entities.Order;
 import com.chillsrestaurant.app.entities.OrderMenuItem;
+import com.chillsrestaurant.app.entities.OrderStatus;
+import com.chillsrestaurant.app.entities.dto.EditOrderDTO;
 import com.chillsrestaurant.app.entities.dto.OrderDTO;
 import com.chillsrestaurant.app.entities.mapper.OrderMapper;
 import com.chillsrestaurant.app.entities.response.OrderResponse;
@@ -86,9 +87,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean updateOrder(OrderDTO updateOrder) {
+    public boolean updateOrder(EditOrderDTO updateOrder) {
         try {
-            this.orderRepository.saveAndFlush(this.orderMapper.orderDtoToOrder(updateOrder));
+
+            Order updatedOrder = this.orderRepository.findById(updateOrder.getNumber()).get();
+
+            updatedOrder.setStatus(OrderStatus.valueOf(updateOrder.getStatus()));
+            updateOrder.setOwner(updateOrder.getOwner());
+            updatedOrder.setOrderMenuItems(updateOrder.getItems());
+
+            this.orderRepository.saveAndFlush(updatedOrder);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
