@@ -1,17 +1,13 @@
 package com.chillsrestaurant.app.controllers;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.server.csrf.CsrfToken;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chillsrestaurant.app.entities.request.CustomerSignUpRequest;
-import com.chillsrestaurant.app.entities.request.CustomerSigninRequest;
-import com.chillsrestaurant.app.entities.request.EmployeeSignUpRequest;
-import com.chillsrestaurant.app.entities.request.EmployeeSigninRequest;
+import com.chillsrestaurant.app.entities.request.SignUpRequest;
+import com.chillsrestaurant.app.entities.request.SigninRequest;
 import com.chillsrestaurant.app.entities.response.JwtAuthenticationResponse;
 import com.chillsrestaurant.app.entities.response.RegisteredResponse;
 import com.chillsrestaurant.app.services.AuthenticationService;
@@ -29,34 +25,19 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/signup/employee")
-    @Operation(summary = "Provides Registration services to Employees")
+    @PostMapping("/signup")
+    @Operation(summary = "Provides Registration services")
     public ResponseEntity<RegisteredResponse> signup(
-            @Parameter(description = "Expects a EmployeeSignUpRequest Object") @RequestBody EmployeeSignUpRequest request) {
+            @Parameter(description = "Expects a SignUpRequest Object") @RequestBody SignUpRequest request) {
         return ResponseEntity
                 .ok(RegisteredResponse.builder().username(authenticationService.signup(request).getToken()).build());
     }
 
-    @PostMapping("/signin/employee")
-    @Operation(summary = "Provides Sign In services to Employees")
+    @PostMapping("/signin")
+    @Operation(summary = "Provides Sign In services")
     public ResponseEntity<JwtAuthenticationResponse> signin(
-            @Parameter(description = "Expects a EmployeeSignInRequest Object") @RequestBody EmployeeSigninRequest request) {
+            @Parameter(description = "Expects a SignInRequest Object") @RequestBody SigninRequest request) {
         return ResponseEntity.ok(authenticationService.signin(request));
     }
 
-    @PostMapping("/signup/customer")
-    @Operation(summary = "Provides Registration services to Customers")
-    public ResponseEntity<RegisteredResponse> signup(
-            @Parameter(description = "Expects a CustomerSignUpRequest Object") @RequestBody CustomerSignUpRequest request) {
-        new RegisteredResponse();
-        return ResponseEntity
-                .ok(RegisteredResponse.builder().username(authenticationService.signup(request).getToken()).build());
-    }
-
-    @PostMapping("/signin/customer")
-    @Operation(summary = "Provides Sign In services to Employees")
-    public ResponseEntity<JwtAuthenticationResponse> signin(
-            @Parameter(description = "Expects a CustomerSignInRequest Object") @RequestBody CustomerSigninRequest request) {
-        return ResponseEntity.ok(authenticationService.signin(request));
-    }
 }

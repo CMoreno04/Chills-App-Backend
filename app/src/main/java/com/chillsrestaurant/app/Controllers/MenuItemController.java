@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,12 @@ public class MenuItemController {
     @GetMapping("/all")
     @Operation(summary = "Provides All Menu Items in Database")
     public ResponseEntity<List<MenuItemDTO>> getAllMenuItems() {
+        return ResponseEntity.ok(this.menuItemService.getAllProducts());
+    }
+
+    @PostMapping("/add")
+    @Operation(summary = "Adds Menu Items in Database")
+    public ResponseEntity<List<MenuItemDTO>> addMenuItems(@RequestBody MenuItemDTO menuItemDTO) {
         return ResponseEntity.ok(this.menuItemService.getAllProducts());
     }
 

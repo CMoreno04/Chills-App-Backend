@@ -13,16 +13,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@SuperBuilder
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
@@ -30,20 +29,26 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Integer id;
+    private Integer id;
 
     @Column(name = "first_name")
-    protected String firstName;
+    private String firstName;
 
     @Column(name = "last_name")
-    protected String lastName;
+    private String lastName;
 
     @Column(unique = true, nullable = false)
-    protected String email;
+    private String email;
 
-    protected String password;
+    private String password;
 
-    protected  Role role;
+    private String phone;
+
+    private String address;
+
+    private boolean enabled;
+
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -67,7 +72,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
 
     @Override
@@ -80,16 +85,10 @@ public class User implements UserDetails {
         return password;
     }
 
-    // Implement a toString that is safe against stack overflow
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
-                '}';
+        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+                + ", password=" + password + ", phone=" + phone + ", address=" + address + ", role=" + role + "]";
     }
 
     // Implement an equals method that only checks id for equality

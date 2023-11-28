@@ -5,17 +5,17 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.chillsrestaurant.app.entities.Customer;
 import com.chillsrestaurant.app.entities.Order;
 import com.chillsrestaurant.app.entities.OrderMenuItem;
 import com.chillsrestaurant.app.entities.OrderStatus;
+import com.chillsrestaurant.app.entities.User;
 import com.chillsrestaurant.app.entities.dto.EditOrderDTO;
 import com.chillsrestaurant.app.entities.dto.OrderDTO;
 import com.chillsrestaurant.app.entities.mapper.OrderMapper;
 import com.chillsrestaurant.app.entities.response.OrderResponse;
-import com.chillsrestaurant.app.repositories.CustomerRepository;
 import com.chillsrestaurant.app.repositories.OrderMenuItemRepository;
 import com.chillsrestaurant.app.repositories.OrderRepository;
+import com.chillsrestaurant.app.repositories.UserRepository;
 import com.chillsrestaurant.app.services.OrderService;
 
 import jakarta.transaction.Transactional;
@@ -24,14 +24,17 @@ import jakarta.transaction.Transactional;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
     private final OrderMapper orderMapper;
     private final OrderMenuItemRepository orderMenuItemRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, CustomerRepository customerRepository,
-            OrderMapper orderMapper, OrderMenuItemRepository orderMenuItemRepository) {
+    public OrderServiceImpl(
+            OrderRepository orderRepository,
+            UserRepository userRepository,
+            OrderMapper orderMapper,
+            OrderMenuItemRepository orderMenuItemRepository) {
         this.orderRepository = orderRepository;
-        this.customerRepository = customerRepository;
+        this.userRepository = userRepository;
         this.orderMapper = orderMapper;
         this.orderMenuItemRepository = orderMenuItemRepository;
     }
@@ -49,8 +52,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public List<Order> addAnOrder(OrderDTO newOrder) {
-
-        Customer customer = customerRepository.findById(newOrder.getCustomer().getId()).get();
+        User customer = this.userRepository.findById(newOrder.getCustomer().getId()).get();
 
         Order order = this.orderMapper.orderDtoToOrder(newOrder);
 

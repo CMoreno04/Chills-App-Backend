@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 public class OrderDTO {
 
     private Date submitTime;
-    private CustomerDto customer;
+    private UserDto customer;
     private String status;
     private List<OrderMenuItemDto> menuItems;
     private String details;
@@ -24,7 +24,7 @@ public class OrderDTO {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CustomerDto {
+    public static class UserDto {
         private Integer id;
     }
 

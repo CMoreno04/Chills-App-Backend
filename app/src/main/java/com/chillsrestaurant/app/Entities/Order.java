@@ -39,7 +39,7 @@ public class Order implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private User customer;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
