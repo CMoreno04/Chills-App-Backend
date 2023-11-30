@@ -134,52 +134,51 @@ public class OrderServiceImpl implements OrderService {
      * @return A list of responses containing the updated orders.
      */
     @Override
-    @Transactional
-    public List<OrderResponse> updateOrder(EditOrderDTO updateOrderObj) {
+@Transactional
+public List<OrderResponse> updateOrder(EditOrderDTO updateOrderObj) {
+    try {
+        // Retrieve the order first
+        Order updatedOrder = this.orderRepository.findById(updateOrderObj.getNumber())
+                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
 
-        try {
-            // Retrieve the order first
-            Order updatedOrder = this.orderRepository.findById(updateOrderObj.getNumber())
-            .orElseThrow(() -> new IllegalArgumentException("Order not found"));
-            
-            // Efficiently process items to delete
-            List<Long> itemIdsToDelete = updateOrderObj.getItemsToDelete().stream()
-            .map(ItemsToDeleteDTO::getId)
-            .collect(Collectors.toList());
+        // Process items to delete
+        List<Long> itemIdsToDelete = updateOrderObj.getItemsToDelete().stream()
+                .map(ItemsToDeleteDTO::getId)
+                .collect(Collectors.toList());
 
-            System.out.println(updatedOrder.toString());
-    
-            // Update the items
-            updateOrderObj.getItems()
-                    .forEach(itemDto -> {
-                        updatedOrder.getOrderMenuItems()
-                                .removeIf(orderMenuItem -> itemIdsToDelete.contains(orderMenuItem.getMenuItem().getId()));
-                        updatedOrder.getOrderMenuItems()
-                                .stream()
-                                .filter(orderMenuItem -> orderMenuItem.getId().equals(itemDto.getId()))
-                                .forEach(orderMenuItem -> orderMenuItem.updateFromDto(itemDto));
-                    });
-    
-            // Update status
-            updatedOrder.setStatus(this.mapStringToStatus(updateOrderObj.getStatus()));
-    
-            // Save the updated order
-            this.orderRepository.save(updatedOrder);
-    
-            // Perform bulk delete operation after saving the updated order
-            this.orderMenuItemRepository.deleteAllByOrderIdAndMenuItemIdIn(updatedOrder.getId(), itemIdsToDelete);
-    
-        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
-            System.err.println(e.getMessage());
-            // Handle specific exceptions as required
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-            // Handle other exceptions
-        }
-    
-        return this.findAllOrders();
+        // Remove items from the order entity and save immediately
+        this.orderMenuItemRepository.findAllByOrderIdAndMenuItemIdIn(updatedOrder.getId(), itemIdsToDelete)
+                .forEach(updatedOrder::removeOrderMenuItem);
+        this.orderRepository.saveAndFlush(updatedOrder);
+
+        // Update the items
+        updateOrderObj.getItems().forEach(itemDto -> {
+            updatedOrder.getOrderMenuItems()
+                    .stream()
+                    .filter(orderMenuItem -> orderMenuItem.getId().equals(itemDto.getId()))
+                    .forEach(orderMenuItem -> orderMenuItem.updateFromDto(itemDto));
+        });
+
+        // Update status
+        updatedOrder.setStatus(this.mapStringToStatus(updateOrderObj.getStatus()));
+
+        // Save the updated order
+        this.orderRepository.saveAndFlush(updatedOrder);
+
+        // Perform bulk delete operation
+        this.orderMenuItemRepository.deleteAllByOrderIdAndMenuItemIdIn(updatedOrder.getId(), itemIdsToDelete);
+
+    } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
+        System.err.println(e.getMessage());
+        // Handle specific exceptions as required
+    } catch (Exception ex) {
+        System.err.println(ex.getMessage());
+        // Handle other exceptions
     }
-    
+
+    return this.findAllOrders();
+}
+
 
     private OrderStatus mapStringToStatus(String statusString) {
         switch (statusString.toUpperCase()) {

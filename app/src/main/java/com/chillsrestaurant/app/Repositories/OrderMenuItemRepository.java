@@ -15,7 +15,7 @@ public interface OrderMenuItemRepository extends JpaRepository<OrderMenuItem, Lo
 
     public void deleteAllByOrderIdAndMenuItemIdIn(Order updatedOrder, List<Long> itemIdsToDelete);
 
-    public void findAllByOrderIdAndMenuItemIdIn(Long number, List<Long> itemIdsToDelete);
+    public List<OrderMenuItem> findAllByOrderIdAndMenuItemIdIn(Long id, List<Long> itemIdsToDelete);
 
     public void deleteAllByOrderIdAndMenuItemIdIn(Long id, List<Long> itemIdsToDelete);
 
