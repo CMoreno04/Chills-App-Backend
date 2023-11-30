@@ -167,7 +167,7 @@ public class OrderServiceImpl implements OrderService {
             this.orderRepository.save(updatedOrder);
     
             // Perform bulk delete operation after saving the updated order
-            this.orderMenuItemRepository.deleteAllByOrderAndMenuItemIdIn(updatedOrder, itemIdsToDelete);
+            this.orderMenuItemRepository.deleteAllByOrderIdAndMenuItemIdIn(updatedOrder.getId(), itemIdsToDelete);
     
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             System.err.println(e.getMessage());
