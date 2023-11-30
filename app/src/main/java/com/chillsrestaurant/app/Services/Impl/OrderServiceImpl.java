@@ -12,6 +12,7 @@ import com.chillsrestaurant.app.entities.OrderMenuItem;
 import com.chillsrestaurant.app.entities.OrderStatus;
 import com.chillsrestaurant.app.entities.User;
 import com.chillsrestaurant.app.entities.dto.EditOrderDTO;
+import com.chillsrestaurant.app.entities.dto.ItemsToDeleteDTO;
 import com.chillsrestaurant.app.entities.dto.OrderDTO;
 import com.chillsrestaurant.app.entities.mapper.OrderMapper;
 import com.chillsrestaurant.app.entities.response.OrderResponse;
@@ -144,14 +145,14 @@ public class OrderServiceImpl implements OrderService {
     
             // Efficiently process items to delete
             List<Long> itemIdsToDelete = updateOrderObj.getItemsToDelete().stream()
-                    .map(com.chillsrestaurant.app.entities.dto.ItemsToDeleteDTO::getId)
+                    .map(ItemsToDeleteDTO::getId)
                     .collect(Collectors.toList());
     
             // Update the items
             updateOrderObj.getItems()
                     .forEach(itemDto -> {
                         updatedOrder.getOrderMenuItems()
-                                .removeIf(orderMenuItem -> itemIdsToDelete.contains(orderMenuItem.getId()));
+                                .removeIf(orderMenuItem -> itemIdsToDelete.contains(orderMenuItem.getMenuItem().getId()));
                         updatedOrder.getOrderMenuItems()
                                 .stream()
                                 .filter(orderMenuItem -> orderMenuItem.getId().equals(itemDto.getId()))
