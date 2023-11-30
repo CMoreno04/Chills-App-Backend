@@ -155,7 +155,7 @@ public List<OrderResponse> updateOrder(EditOrderDTO updateOrderObj) {
         updateOrderObj.getItems().forEach(itemDto -> {
             updatedOrder.getOrderMenuItems()
                     .stream()
-                    .filter(orderMenuItem -> orderMenuItem.getId().equals(itemDto.getId()))
+                    .filter(orderMenuItem -> orderMenuItem.getMenuItem().getId().equals(itemDto.getId()))
                     .forEach(orderMenuItem -> orderMenuItem.updateFromDto(itemDto));
         });
 
