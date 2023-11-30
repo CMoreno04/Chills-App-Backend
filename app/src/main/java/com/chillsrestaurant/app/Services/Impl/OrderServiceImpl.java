@@ -79,34 +79,36 @@ public class OrderServiceImpl implements OrderService {
      * @param newOrder DTO containing new order details.
      * @return A list of responses containing updated order details.
      */
-    @Override
+  @Override
     @Transactional
     public List<OrderResponse> addAnOrder(OrderDTO newOrder) {
         try {
-            User customer = this.userRepository.findById(newOrder.getCustomer().getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+            User customer = this.userRepository.findById(newOrder.getCustomer().getId()).get();
+
             Order order = this.orderMapper.orderDtoToOrder(newOrder);
+
             order.setCustomer(customer);
+
+            List<OrderMenuItem> menuitems = order.getOrderMenuItems();
+
+            order.setOrderMenuItems(new ArrayList<>());
 
             final Order orderPersisted = this.orderRepository.save(order);
 
-            List<OrderMenuItem> menuItems = order.getOrderMenuItems();
-            menuItems.forEach(menuItem -> {
+            menuitems.forEach(menuItem -> {
                 menuItem.setOrder(orderPersisted);
-                menuItem.setId(null); // Set ID to null for new items
-                this.menuItemRepository.findById(menuItem.getMenuItem().getId())
-                        .ifPresent(menuItem::setMenuItem);
+                menuItem.setId(null);
             });
 
-            this.orderMenuItemRepository.saveAll(menuItems);
+            this.orderMenuItemRepository.saveAll(menuitems);
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             System.err.println(e.getMessage());
-            // Handle specific exceptions as required
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
-            // Handle other exceptions
         }
+
         return this.findAllOrders();
+
     }
 
     /**
