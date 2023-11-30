@@ -34,6 +34,7 @@ public class OrderDTO {
     @AllArgsConstructor
     public static class OrderMenuItemDto {
         private Long id;
+        private String name;
         private Integer quantity;
         private String notes;
     }

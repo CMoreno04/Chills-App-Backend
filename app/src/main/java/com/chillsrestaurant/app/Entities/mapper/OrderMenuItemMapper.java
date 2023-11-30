@@ -13,5 +13,6 @@ public interface OrderMenuItemMapper {
     OrderMenuItem orderMenuItemDtoToOrderMenuItem (OrderMenuItemDto orderMenuItemDto);
 
     @Mapping(target = "id", source = "menuItem.id")
+    @Mapping(target ="name", source="menuItem.name")
     OrderMenuItemDto orderMenuItemToOrderMenuItemDto (OrderMenuItem orderMenuItemDto);
 }
