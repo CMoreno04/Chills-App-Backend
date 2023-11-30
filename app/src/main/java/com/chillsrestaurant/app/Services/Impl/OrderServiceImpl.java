@@ -101,7 +101,8 @@ public class OrderServiceImpl implements OrderService {
 
             Order updatedOrder = this.orderRepository.findById(updateOrder.getNumber()).get();
 
-            updatedOrder.setStatus(OrderStatus.valueOf(updateOrder.getStatus()));
+            updatedOrder.setStatus(this.mapStringToStatus(updateOrder.getStatus()));
+
             updateOrder.setOwner(updateOrder.getOwner());
             updatedOrder.setOrderMenuItems(updateOrder.getItems());
 
@@ -112,6 +113,23 @@ public class OrderServiceImpl implements OrderService {
             System.err.println(ex.getMessage());
         }
         return this.findAllOrders();
+    }
+
+    private OrderStatus mapStringToStatus(String statusString) {
+        switch (statusString.toUpperCase()) {
+            case "IN PROGRESS":
+                return OrderStatus.IN_PROGRESS;
+            case "PENDING":
+                return OrderStatus.PENDING;
+            case "COMPLETED":
+                return OrderStatus.COMPLETED;
+            case "CANCELED":
+                return OrderStatus.CANCELED;
+            case "PENDING PAYMENT":
+                return OrderStatus.PENDING_PAYMENT;
+            default:
+                throw new IllegalArgumentException("Invalid status string: " + statusString);
+        }
     }
 
 }
