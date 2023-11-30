@@ -1,7 +1,8 @@
 package com.chillsrestaurant.app.entities.dto;
 
 import java.util.List;
-import com.chillsrestaurant.app.entities.OrderMenuItem;
+
+import com.chillsrestaurant.app.entities.dto.OrderDTO.OrderMenuItemDto;
 
 import lombok.Data;
 
@@ -11,5 +12,6 @@ public class EditOrderDTO {
     private Long number;
     private String owner;
     private String status;
-    private List<OrderMenuItem> items;
+    private List<OrderMenuItemDto> items;
+
 }

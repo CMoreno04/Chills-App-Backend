@@ -12,6 +12,7 @@ import com.chillsrestaurant.app.entities.OrderStatus;
 import com.chillsrestaurant.app.entities.User;
 import com.chillsrestaurant.app.entities.dto.EditOrderDTO;
 import com.chillsrestaurant.app.entities.dto.OrderDTO;
+import com.chillsrestaurant.app.entities.dto.OrderDTO.OrderMenuItemDto;
 import com.chillsrestaurant.app.entities.mapper.OrderMapper;
 import com.chillsrestaurant.app.entities.response.OrderResponse;
 import com.chillsrestaurant.app.repositories.OrderMenuItemRepository;
@@ -104,7 +105,8 @@ public class OrderServiceImpl implements OrderService {
             updatedOrder.setStatus(this.mapStringToStatus(updateOrder.getStatus()));
 
             updateOrder.setOwner(updateOrder.getOwner());
-            updatedOrder.setOrderMenuItems(updateOrder.getItems());
+
+            updatedOrder.setOrderMenuItems(this.editOrderMenuItems(updateOrder.getItems()));
 
             this.orderRepository.saveAndFlush(updatedOrder);
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
@@ -113,6 +115,15 @@ public class OrderServiceImpl implements OrderService {
             System.err.println(ex.getMessage());
         }
         return this.findAllOrders();
+    }
+
+    private List<OrderMenuItem> editOrderMenuItems(List<OrderMenuItemDto> inOrderMenuItemDtos) {
+
+        List<OrderMenuItem> outOrderMenuItems = new ArrayList<>();
+
+        inOrderMenuItemDtos.forEach(item -> outOrderMenuItems.add(new OrderMenuItem(item)));
+
+        return outOrderMenuItems;
     }
 
     private OrderStatus mapStringToStatus(String statusString) {

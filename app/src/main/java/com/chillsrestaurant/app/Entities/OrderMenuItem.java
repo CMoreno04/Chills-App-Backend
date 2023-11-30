@@ -2,6 +2,7 @@ package com.chillsrestaurant.app.entities;
 
 import java.util.Objects;
 
+import com.chillsrestaurant.app.entities.dto.OrderDTO.OrderMenuItemDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -39,6 +40,12 @@ public class OrderMenuItem {
 
     @Column(length = 255)
     private String notes;
+
+    public OrderMenuItem(OrderMenuItemDto orderMenuItem) {
+        this.id = orderMenuItem.getId();
+        this.notes = orderMenuItem.getNotes();
+        this.quantity = orderMenuItem.getQuantity();
+    }
 
     @Override
     public boolean equals(Object o) {
