@@ -142,30 +142,35 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public List<OrderResponse> updateOrder(EditOrderDTO updateOrderObj) {
         try {
-
+            // Retrieve the order first
+            Order updatedOrder = this.orderRepository.findById(updateOrderObj.getNumber())
+                    .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+    
             // Efficiently process items to delete
             List<Long> itemIdsToDelete = updateOrderObj.getItemsToDelete().stream()
                     .map(OrderMenuItemDto::getId)
                     .collect(Collectors.toList());
-
-            // Bulk delete operation for performance
-            this.orderMenuItemRepository.deleteAllByOrderIdAndMenuItemIdIn(updateOrderObj.getNumber(), itemIdsToDelete);
-
-            Order updatedOrder = this.orderRepository.findById(updateOrderObj.getNumber())
-                    .orElseThrow(() -> new IllegalArgumentException("Order not found"));
-
-            updatedOrder.setStatus(this.mapStringToStatus(updateOrderObj.getStatus()));
-
+    
             // Update the items
             updateOrderObj.getItems()
                     .forEach(itemDto -> {
+                        updatedOrder.getOrderMenuItems()
+                                .removeIf(orderMenuItem -> itemIdsToDelete.contains(orderMenuItem.getId()));
                         updatedOrder.getOrderMenuItems()
                                 .stream()
                                 .filter(orderMenuItem -> orderMenuItem.getId().equals(itemDto.getId()))
                                 .forEach(orderMenuItem -> orderMenuItem.updateFromDto(itemDto));
                     });
-
+    
+            // Update status
+            updatedOrder.setStatus(this.mapStringToStatus(updateOrderObj.getStatus()));
+    
+            // Save the updated order
             this.orderRepository.save(updatedOrder);
+    
+            // Perform bulk delete operation after saving the updated order
+            this.orderMenuItemRepository.deleteAllByOrderIdAndMenuItemIdIn(updateOrderObj.getNumber(), itemIdsToDelete);
+    
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             System.err.println(e.getMessage());
             // Handle specific exceptions as required
@@ -173,9 +178,10 @@ public class OrderServiceImpl implements OrderService {
             System.err.println(ex.getMessage());
             // Handle other exceptions
         }
-
+    
         return this.findAllOrders();
     }
+    
 
     private OrderStatus mapStringToStatus(String statusString) {
         switch (statusString.toUpperCase()) {
