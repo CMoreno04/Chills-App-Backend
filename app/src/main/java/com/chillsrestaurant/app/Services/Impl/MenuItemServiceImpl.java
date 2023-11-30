@@ -30,8 +30,10 @@ public class MenuItemServiceImpl implements MenuItemService {
 
         try {
             this.menuItemRepository.deleteById(id);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             System.err.println(e.getMessage());
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
 
         return this.getAllProducts();
@@ -47,6 +49,8 @@ public class MenuItemServiceImpl implements MenuItemService {
             this.menuItemRepository.save(menuItem);
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             System.err.println(e.getMessage());
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
 
         return this.getAllProducts();

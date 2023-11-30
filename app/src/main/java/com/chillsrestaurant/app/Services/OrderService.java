@@ -10,9 +10,9 @@ import com.chillsrestaurant.app.entities.response.OrderResponse;
 public interface OrderService {
     public List<OrderResponse> findAllOrders();
 
-    public List<Order> addAnOrder(OrderDTO order);
+    public List<OrderResponse> addAnOrder(OrderDTO order);
 
-    public boolean deleteOrder(Order order);
+    public List<OrderResponse> deleteOrder(Order order);
 
-    public boolean updateOrder(EditOrderDTO updateOrder);
+    public List<OrderResponse> updateOrder(EditOrderDTO updateOrder);
 }

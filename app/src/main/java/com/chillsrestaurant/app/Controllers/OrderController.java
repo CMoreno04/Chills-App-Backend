@@ -39,13 +39,13 @@ public class OrderController {
     @DeleteMapping("/delete")
     @Operation(summary = "Deletes an order from the Database")
     public ResponseEntity<Void> deleteOrder(@RequestBody Order order) {
-        return this.orderService.deleteOrder(order) ? ResponseEntity.noContent().build()
+        return this.orderService.deleteOrder(order) != null ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
     }
 
     @PostMapping("/create")
     @Operation(summary = "Creates Order and returns updated list of all orders")
-    public ResponseEntity<List<Order>> createOrder(
+    public ResponseEntity<List<OrderResponse>> createOrder(
             @Parameter(description = "Expects a Order Object") @RequestBody OrderDTO newOrder) {
         return ResponseEntity.ok(this.orderService.addAnOrder(newOrder));
     }
@@ -53,7 +53,7 @@ public class OrderController {
     @PutMapping("/update")
     @Operation(summary = "Updates and Order.")
     public ResponseEntity<Void> updateOrder(@RequestBody EditOrderDTO updateOrder) {
-        return this.orderService.updateOrder(updateOrder) ? ResponseEntity.ok().build()
+        return this.orderService.updateOrder(updateOrder) != null ? ResponseEntity.ok().build()
                 : ResponseEntity.badRequest().build();
     }
 }

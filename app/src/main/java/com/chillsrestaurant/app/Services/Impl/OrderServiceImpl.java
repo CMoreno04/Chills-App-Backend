@@ -3,6 +3,7 @@ package com.chillsrestaurant.app.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.chillsrestaurant.app.entities.Order;
@@ -51,45 +52,51 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public List<Order> addAnOrder(OrderDTO newOrder) {
-        User customer = this.userRepository.findById(newOrder.getCustomer().getId()).get();
+    public List<OrderResponse> addAnOrder(OrderDTO newOrder) {
+        try {
+            User customer = this.userRepository.findById(newOrder.getCustomer().getId()).get();
 
-        Order order = this.orderMapper.orderDtoToOrder(newOrder);
+            Order order = this.orderMapper.orderDtoToOrder(newOrder);
 
-        order.setCustomer(customer);
+            order.setCustomer(customer);
 
-        List<OrderMenuItem> menuitems = order.getOrderMenuItems();
+            List<OrderMenuItem> menuitems = order.getOrderMenuItems();
 
-        order.setOrderMenuItems(new ArrayList<>());
+            order.setOrderMenuItems(new ArrayList<>());
 
-        final Order orderPersisted = this.orderRepository.save(order);
+            final Order orderPersisted = this.orderRepository.save(order);
 
-        menuitems.forEach(menuItem -> {
-            menuItem.setOrder(orderPersisted);
-            menuItem.setId(null);
-        });
+            menuitems.forEach(menuItem -> {
+                menuItem.setOrder(orderPersisted);
+                menuItem.setId(null);
+            });
 
-        this.orderMenuItemRepository.saveAll(menuitems);
+            this.orderMenuItemRepository.saveAll(menuitems);
+        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
+            System.err.println(e.getMessage());
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
 
-        List<Order> orders = this.orderRepository.findAll();
+        return this.findAllOrders();
 
-        return orders;
     }
 
     @Override
     @Transactional
-    public boolean deleteOrder(Order order) {
+    public List<OrderResponse> deleteOrder(Order order) {
         try {
             this.orderRepository.delete(order);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
+            System.err.println(e.getMessage());
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
+        return this.findAllOrders();
     }
 
     @Override
-    public boolean updateOrder(EditOrderDTO updateOrder) {
+    public List<OrderResponse> updateOrder(EditOrderDTO updateOrder) {
         try {
 
             Order updatedOrder = this.orderRepository.findById(updateOrder.getNumber()).get();
@@ -99,11 +106,12 @@ public class OrderServiceImpl implements OrderService {
             updatedOrder.setOrderMenuItems(updateOrder.getItems());
 
             this.orderRepository.saveAndFlush(updatedOrder);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
+            System.err.println(e.getMessage());
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
+        return this.findAllOrders();
     }
 
 }

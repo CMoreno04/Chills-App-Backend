@@ -2,6 +2,7 @@ package com.chillsrestaurant.app.services.impl;
 
 import java.util.List;
 
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -44,8 +45,10 @@ public class UserServiceImpl implements UserService {
             }
             updatedUser.setId(id);
             this.userRepository.saveAndFlush(updatedUser);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             System.err.println(e.getMessage());
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
 
         return this.getAllUsers();
@@ -58,10 +61,12 @@ public class UserServiceImpl implements UserService {
                 throw new Exception("User Not Found!");
             }
             this.userRepository.deleteById(id);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             System.err.println(e.getMessage());
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
-        
+
         return this.getAllUsers();
     }
 }
