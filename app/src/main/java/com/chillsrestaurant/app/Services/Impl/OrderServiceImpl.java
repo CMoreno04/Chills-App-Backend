@@ -137,16 +137,17 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public List<OrderResponse> updateOrder(EditOrderDTO updateOrderObj) {
 
-        System.out.println(updateOrderObj.toString());
         try {
             // Retrieve the order first
             Order updatedOrder = this.orderRepository.findById(updateOrderObj.getNumber())
-                    .orElseThrow(() -> new IllegalArgumentException("Order not found"));
-    
+            .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+            
             // Efficiently process items to delete
             List<Long> itemIdsToDelete = updateOrderObj.getItemsToDelete().stream()
-                    .map(ItemsToDeleteDTO::getId)
-                    .collect(Collectors.toList());
+            .map(ItemsToDeleteDTO::getId)
+            .collect(Collectors.toList());
+
+            System.out.println(updatedOrder.toString());
     
             // Update the items
             updateOrderObj.getItems()
@@ -166,7 +167,7 @@ public class OrderServiceImpl implements OrderService {
             this.orderRepository.save(updatedOrder);
     
             // Perform bulk delete operation after saving the updated order
-            this.orderMenuItemRepository.deleteAllByOrderIdAndMenuItemIdIn(updateOrderObj.getNumber(), itemIdsToDelete);
+            this.orderMenuItemRepository.deleteAllByOrderAndMenuItemIdIn(updatedOrder, itemIdsToDelete);
     
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             System.err.println(e.getMessage());
