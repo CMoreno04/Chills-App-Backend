@@ -139,34 +139,34 @@ public class OrderServiceImpl implements OrderService {
      * @return A list of responses containing the updated orders.
      */
     @Override
-public List<OrderResponse> updateOrder(EditOrderDTO updateOrderObj) {
-    Order updatedOrder = this.orderRepository.findById(updateOrderObj.getNumber())
-            .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+    @Transactional
+    public List<OrderResponse> updateOrder(EditOrderDTO updateOrderObj) {
+        Order updatedOrder = this.orderRepository.findById(updateOrderObj.getNumber())
+                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
 
-    updatedOrder.setStatus(this.mapStringToStatus(updateOrderObj.getStatus()));
+        updatedOrder.setStatus(this.mapStringToStatus(updateOrderObj.getStatus()));
 
-    // Efficiently process items to delete
-    List<Long> itemIdsToDelete = updateOrderObj.getItemsToDelete().stream()
-                                       .map(OrderMenuItemDto::getId)
-                                       .collect(Collectors.toList());
+        // Efficiently process items to delete
+        List<Long> itemIdsToDelete = updateOrderObj.getItemsToDelete().stream()
+                .map(OrderMenuItemDto::getId)
+                .collect(Collectors.toList());
 
-    // Bulk delete operation for performance
-    this.orderMenuItemRepository.deleteAllByOrderAndMenuItemIdIn(updatedOrder, itemIdsToDelete);
+        // Bulk delete operation for performance
+        this.orderMenuItemRepository.deleteAllByOrderAndMenuItemIdIn(updatedOrder, itemIdsToDelete);
 
-    // Update the items
-    updateOrderObj.getItems()
-            .forEach(itemDto -> {
-                updatedOrder.getOrderMenuItems()
+        // Update the items
+        updateOrderObj.getItems()
+                .forEach(itemDto -> {
+                    updatedOrder.getOrderMenuItems()
                             .stream()
                             .filter(orderMenuItem -> orderMenuItem.getId().equals(itemDto.getId()))
                             .forEach(orderMenuItem -> orderMenuItem.updateFromDto(itemDto));
-            });
+                });
 
-    this.orderRepository.save(updatedOrder);
+        this.orderRepository.save(updatedOrder);
 
-    return this.findAllOrders();
-}
-
+        return this.findAllOrders();
+    }
 
     private OrderStatus mapStringToStatus(String statusString) {
         switch (statusString.toUpperCase()) {
