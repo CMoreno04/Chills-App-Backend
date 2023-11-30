@@ -38,9 +38,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> updateUser(Integer id, User updatedUser) {
+        try {
+            if (!this.userRepository.findById(id).isPresent()) {
+                throw new Exception("User Not Found!");
+            }
+            updatedUser.setId(id);
+            this.userRepository.saveAndFlush(updatedUser);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
-        //TO DO: Implement update User.
+        return this.getAllUsers();
+    }
+
+    @Override
+    public List<User> deleteUser(Integer id) {
+        try {
+            if (!this.userRepository.findById(id).isPresent()) {
+                throw new Exception("User Not Found!");
+            }
+            this.userRepository.deleteById(id);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
         
-       return this.getAllUsers();
+        return this.getAllUsers();
     }
 }

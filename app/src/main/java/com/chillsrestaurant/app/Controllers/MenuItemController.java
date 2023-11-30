@@ -34,11 +34,11 @@ public class MenuItemController {
     @PostMapping("/add")
     @Operation(summary = "Adds Menu Items in Database")
     public ResponseEntity<List<MenuItemDTO>> addMenuItems(@RequestBody MenuItemDTO menuItemDTO) {
-        return ResponseEntity.ok(this.menuItemService.getAllProducts());
+        return ResponseEntity.ok(this.menuItemService.createMenuItem(menuItemDTO));
     }
 
     @DeleteMapping("/delete")
-    @Operation(summary = "Removes MenuItem from database Database")
+    @Operation(summary = "Removes MenuItem from Database")
     public ResponseEntity<List<MenuItemDTO>> removeMenuItem(@RequestBody Long id) {
         return ResponseEntity.ok(this.menuItemService.deleteMenuItem(id));
     }

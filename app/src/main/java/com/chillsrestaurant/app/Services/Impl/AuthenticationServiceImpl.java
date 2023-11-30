@@ -42,7 +42,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                 .phone(request.getPhone())
                                 .address(request.getAddress())
                                 .password(passwordEncoder.encode(request.getPassword()))
-                                .role(Role.CUSTOMER).build();
+                                .role(Role.valueOf(request.getRole().isEmpty() ? "CUSTOMER"
+                                                : request.getRole().toUpperCase()))
+                                .enabled(true)
+                                .build();
 
                 user.setEmail(request.getEmail());
 
@@ -53,12 +56,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         @Override
         public JwtAuthenticationResponse signin(SigninRequest request) {
+
+                String email = this.userRepository.findByEmail(request.getEmail()).get().getUsername();
+
                 authenticationManager.authenticate(
-                                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                                new UsernamePasswordAuthenticationToken(email, request.getPassword()));
+
                 var user = userRepository.findByEmail(request.getEmail())
                                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+
                 var jwt = jwtService.generateToken(user);
+
                 return JwtAuthenticationResponse.builder().user(user)
                                 .token(jwt).build();
+
         }
 }

@@ -30,7 +30,7 @@ public class AuthenticationController {
     public ResponseEntity<RegisteredResponse> signup(
             @Parameter(description = "Expects a SignUpRequest Object") @RequestBody SignUpRequest request) {
         return ResponseEntity
-                .ok(RegisteredResponse.builder().username(authenticationService.signup(request).getToken()).build());
+                .ok(RegisteredResponse.builder().email(authenticationService.signup(request).getToken()).build());
     }
 
     @PostMapping("/signin")

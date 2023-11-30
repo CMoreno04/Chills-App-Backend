@@ -10,4 +10,5 @@ public interface UserService {
     public UserDetailsService userDetailsService();
     public List<User> getAllUsers();
     public List<User> updateUser(Integer id, User updatedUser);
+    public List<User> deleteUser(Integer id);
 }
