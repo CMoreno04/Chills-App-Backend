@@ -13,5 +13,6 @@ public class EditOrderDTO {
     private String owner;
     private String status;
     private List<OrderMenuItemDto> items;
+    private List<OrderMenuItemDto> itemsToDelete;
 
 }

@@ -79,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
      * @param newOrder DTO containing new order details.
      * @return A list of responses containing updated order details.
      */
-  @Override
+    @Override
     @Transactional
     public List<OrderResponse> addAnOrder(OrderDTO newOrder) {
         try {
@@ -135,43 +135,38 @@ public class OrderServiceImpl implements OrderService {
     /**
      * Updates an existing order based on the provided DTO.
      *
-     * @param updateOrder DTO containing updated order details.
+     * @param updateOrderObj DTO containing updated order details.
      * @return A list of responses containing the updated orders.
      */
     @Override
-    public List<OrderResponse> updateOrder(EditOrderDTO updateOrder) {
-        try {
-            Order updatedOrder = this.orderRepository.findById(updateOrder.getNumber())
-                    .orElseThrow(() -> new IllegalArgumentException("Order not found"));
-            updatedOrder.setStatus(this.mapStringToStatus(updateOrder.getStatus()));
-            updatedOrder.setOrderMenuItems(
-                    this.editOrderMenuItems(updatedOrder.getOrderMenuItems(), updateOrder.getItems()));
+public List<OrderResponse> updateOrder(EditOrderDTO updateOrderObj) {
+    Order updatedOrder = this.orderRepository.findById(updateOrderObj.getNumber())
+            .orElseThrow(() -> new IllegalArgumentException("Order not found"));
 
-            this.orderRepository.saveAndFlush(updatedOrder);
-        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
-            System.err.println(e.getMessage());
-            // Handle specific exceptions as required
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-            // Handle other exceptions
-        }
-        return this.findAllOrders();
-    }
+    updatedOrder.setStatus(this.mapStringToStatus(updateOrderObj.getStatus()));
 
-    private List<OrderMenuItem> editOrderMenuItems(List<OrderMenuItem> orderItems,
-            List<OrderMenuItemDto> inOrderMenuItemDtos) {
-        Map<Long, OrderMenuItemDto> dtoMap = inOrderMenuItemDtos.stream()
-                .collect(Collectors.toMap(OrderMenuItemDto::getId, dto -> dto));
+    // Efficiently process items to delete
+    List<Long> itemIdsToDelete = updateOrderObj.getItemsToDelete().stream()
+                                       .map(OrderMenuItemDto::getId)
+                                       .collect(Collectors.toList());
 
-        orderItems.forEach(item -> {
-            OrderMenuItemDto dto = dtoMap.get(item.getId());
-            if (dto != null) {
-                item.updateFromDto(dto);
-            }
-        });
+    // Bulk delete operation for performance
+    this.orderMenuItemRepository.deleteAllByOrderAndMenuItemIdIn(updatedOrder, itemIdsToDelete);
 
-        return orderItems;
-    }
+    // Update the items
+    updateOrderObj.getItems()
+            .forEach(itemDto -> {
+                updatedOrder.getOrderMenuItems()
+                            .stream()
+                            .filter(orderMenuItem -> orderMenuItem.getId().equals(itemDto.getId()))
+                            .forEach(orderMenuItem -> orderMenuItem.updateFromDto(itemDto));
+            });
+
+    this.orderRepository.save(updatedOrder);
+
+    return this.findAllOrders();
+}
+
 
     private OrderStatus mapStringToStatus(String statusString) {
         switch (statusString.toUpperCase()) {
