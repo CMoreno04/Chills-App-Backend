@@ -151,7 +151,7 @@ public class OrderServiceImpl implements OrderService {
             updateOrderObj.getItems()
                     .forEach(itemDto -> {
                         updatedOrder.getOrderMenuItems()
-                                .removeIf(orderMenuItem -> itemIdsToDelete.contains(orderMenuItem.getMenuItem().getId()));
+                                .removeIf(orderMenuItem -> itemIdsToDelete.contains(orderMenuItem.getId()));
                         updatedOrder.getOrderMenuItems()
                                 .stream()
                                 .filter(orderMenuItem -> orderMenuItem.getId().equals(itemDto.getId()))
