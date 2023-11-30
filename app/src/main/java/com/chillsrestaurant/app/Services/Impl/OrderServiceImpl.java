@@ -13,6 +13,7 @@ import com.chillsrestaurant.app.entities.OrderMenuItem;
 import com.chillsrestaurant.app.entities.OrderStatus;
 import com.chillsrestaurant.app.entities.User;
 import com.chillsrestaurant.app.entities.dto.EditOrderDTO;
+import com.chillsrestaurant.app.entities.dto.EditOrderDTO.ItemsToDeleteDTO;
 import com.chillsrestaurant.app.entities.dto.OrderDTO;
 import com.chillsrestaurant.app.entities.dto.OrderDTO.OrderMenuItemDto;
 import com.chillsrestaurant.app.entities.mapper.OrderMapper;
@@ -141,6 +142,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public List<OrderResponse> updateOrder(EditOrderDTO updateOrderObj) {
+
+        System.out.println(updateOrderObj.toString());
         try {
             // Retrieve the order first
             Order updatedOrder = this.orderRepository.findById(updateOrderObj.getNumber())
@@ -148,14 +151,14 @@ public class OrderServiceImpl implements OrderService {
     
             // Efficiently process items to delete
             List<Long> itemIdsToDelete = updateOrderObj.getItemsToDelete().stream()
-                    .map(OrderMenuItemDto::getId)
+                    .map(ItemsToDeleteDTO::getId)
                     .collect(Collectors.toList());
     
             // Update the items
             updateOrderObj.getItems()
                     .forEach(itemDto -> {
                         updatedOrder.getOrderMenuItems()
-                                .removeIf(orderMenuItem -> itemIdsToDelete.contains(orderMenuItem.getId()));
+                                .removeIf(orderMenuItem -> itemIdsToDelete.contains(orderMenuItem.getMenuItem().getId()));
                         updatedOrder.getOrderMenuItems()
                                 .stream()
                                 .filter(orderMenuItem -> orderMenuItem.getId().equals(itemDto.getId()))

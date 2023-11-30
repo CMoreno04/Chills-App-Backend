@@ -13,6 +13,10 @@ public class EditOrderDTO {
     private String owner;
     private String status;
     private List<OrderMenuItemDto> items;
-    private List<OrderMenuItemDto> itemsToDelete;
+    private List<ItemsToDeleteDTO> itemsToDelete;
 
+    @Data
+    public class ItemsToDeleteDTO {
+        private Long id;
+    }
 }
