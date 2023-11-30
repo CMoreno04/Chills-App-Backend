@@ -2,7 +2,6 @@ package com.chillsrestaurant.app.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -13,12 +12,9 @@ import com.chillsrestaurant.app.entities.OrderMenuItem;
 import com.chillsrestaurant.app.entities.OrderStatus;
 import com.chillsrestaurant.app.entities.User;
 import com.chillsrestaurant.app.entities.dto.EditOrderDTO;
-import com.chillsrestaurant.app.entities.dto.EditOrderDTO.ItemsToDeleteDTO;
 import com.chillsrestaurant.app.entities.dto.OrderDTO;
-import com.chillsrestaurant.app.entities.dto.OrderDTO.OrderMenuItemDto;
 import com.chillsrestaurant.app.entities.mapper.OrderMapper;
 import com.chillsrestaurant.app.entities.response.OrderResponse;
-import com.chillsrestaurant.app.repositories.MenuItemRepository;
 import com.chillsrestaurant.app.repositories.OrderMenuItemRepository;
 import com.chillsrestaurant.app.repositories.OrderRepository;
 import com.chillsrestaurant.app.repositories.UserRepository;
@@ -37,7 +33,6 @@ public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
     private final OrderMapper orderMapper;
     private final OrderMenuItemRepository orderMenuItemRepository;
-    private final MenuItemRepository menuItemRepository;
 
     /**
      * Constructs an instance of OrderServiceImpl with necessary dependencies.
@@ -53,12 +48,10 @@ public class OrderServiceImpl implements OrderService {
             OrderRepository orderRepository,
             UserRepository userRepository,
             OrderMapper orderMapper,
-            MenuItemRepository menuItemRepository,
             OrderMenuItemRepository orderMenuItemRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.orderMapper = orderMapper;
-        this.menuItemRepository = menuItemRepository;
         this.orderMenuItemRepository = orderMenuItemRepository;
     }
 
@@ -151,7 +144,7 @@ public class OrderServiceImpl implements OrderService {
     
             // Efficiently process items to delete
             List<Long> itemIdsToDelete = updateOrderObj.getItemsToDelete().stream()
-                    .map(ItemsToDeleteDTO::getId)
+                    .map(com.chillsrestaurant.app.entities.dto.ItemsToDeleteDTO::getId)
                     .collect(Collectors.toList());
     
             // Update the items

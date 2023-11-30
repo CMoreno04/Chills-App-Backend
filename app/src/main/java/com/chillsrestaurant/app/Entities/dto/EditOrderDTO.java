@@ -18,11 +18,4 @@ public class EditOrderDTO {
     private String status;
     private List<OrderMenuItemDto> items;
     private List<ItemsToDeleteDTO> itemsToDelete;
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public class ItemsToDeleteDTO {
-        private Long id;
-    }
 }
