@@ -52,8 +52,7 @@ public class OrderController {
 
     @PutMapping("/update")
     @Operation(summary = "Updates and Order.")
-    public ResponseEntity<Void> updateOrder(@RequestBody EditOrderDTO updateOrder) {
-        return this.orderService.updateOrder(updateOrder) != null ? ResponseEntity.ok().build()
-                : ResponseEntity.badRequest().build();
+    public ResponseEntity<List<OrderResponse>> updateOrder(@RequestBody EditOrderDTO updateOrder) {
+        return  ResponseEntity.ok(this.orderService.updateOrder(updateOrder));
     }
 }

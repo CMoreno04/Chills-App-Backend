@@ -181,7 +181,7 @@ public class OrderServiceImpl implements OrderService {
                 return OrderStatus.PENDING;
             case "COMPLETED":
                 return OrderStatus.COMPLETED;
-            case "CANCELED":
+            case "CANCELLED":
                 return OrderStatus.CANCELLED;
             case "PENDING PAYMENT":
                 return OrderStatus.PENDING_PAYMENT;
