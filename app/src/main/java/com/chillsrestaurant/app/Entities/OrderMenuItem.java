@@ -1,10 +1,8 @@
 package com.chillsrestaurant.app.entities;
 
 import java.util.Objects;
-
 import com.chillsrestaurant.app.entities.dto.OrderDTO.OrderMenuItemDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +16,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing an OrderMenuItem in Chills Restaurant application.
+ * It links an order to a specific menu item, along with quantity and additional
+ * notes.
+ */
 @Entity
 @Data
 @NoArgsConstructor
@@ -45,10 +48,19 @@ public class OrderMenuItem {
     @Column(length = 255)
     private String notes;
 
-    public OrderMenuItem(OrderMenuItemDto orderMenuItem) {
-        this.id = orderMenuItem.getId();
-        this.notes = orderMenuItem.getNotes();
-        this.quantity = orderMenuItem.getQuantity();
+    /**
+     * Updates this OrderMenuItem entity with data from the given DTO.
+     * Only modifiable fields like quantity and notes are updated.
+     *
+     * @param dto The OrderMenuItemDto containing the new data.
+     */
+    public void updateFromDto(OrderMenuItemDto dto) {
+        if (dto.getQuantity() != null) {
+            this.quantity = dto.getQuantity();
+        }
+        if (dto.getNotes() != null) {
+            this.notes = dto.getNotes();
+        }
     }
 
     @Override
@@ -74,5 +86,4 @@ public class OrderMenuItem {
                 ", notes='" + notes + '\'' +
                 '}';
     }
-
 }
