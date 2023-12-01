@@ -1,5 +1,7 @@
 package com.chillsrestaurant.app.entities.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +17,5 @@ public class NewMenuItemDTO {
     private String description;
     private String category;
     private String availability;
-    private String image;
+    private MultipartFile image;
 }
