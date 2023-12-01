@@ -1,15 +1,14 @@
 package com.chillsrestaurant.app.entities.mapper;
 
+import java.util.Base64;
+
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.chillsrestaurant.app.entities.MenuItem;
 import com.chillsrestaurant.app.entities.dto.NewMenuItemDTO;
-
-import java.io.IOException;
 
 @Mapper(componentModel = "spring")
 public interface MenuItemMapper {
@@ -20,13 +19,9 @@ public interface MenuItemMapper {
 
     @AfterMapping
     default void handleImageMapping(NewMenuItemDTO menuItemDto, @MappingTarget MenuItem menuItem) {
-        MultipartFile file = menuItemDto.getImage();
-        if (file != null) {
-            try {
-                menuItem.setImageBlob(file.getBytes());
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
+        String imageBase64 = menuItemDto.getImage();
+        if (imageBase64 != null && !imageBase64.isEmpty()) {
+            menuItem.setImageBlob(Base64.getDecoder().decode(imageBase64.split(",")[1]));
         }
     }
 }
