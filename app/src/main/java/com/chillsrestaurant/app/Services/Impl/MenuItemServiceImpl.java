@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.chillsrestaurant.app.entities.MenuItem;
 import com.chillsrestaurant.app.entities.dto.MenuItemDTO;
@@ -44,10 +45,12 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
+    @Transactional
     public List<MenuItemDTO> createMenuItem(NewMenuItemDTO newMenuItem) {
 
         try {
             MenuItem menuItem = this.menuItemMapper.newMenuItemDtoToMenuItem(newMenuItem);
+            System.err.println(menuItem.toString());
             this.menuItemRepository.save(menuItem);
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             System.err.println(e.getMessage());
