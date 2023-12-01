@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.chillsrestaurant.app.entities.MenuItem;
 import com.chillsrestaurant.app.entities.dto.MenuItemDTO;
+import com.chillsrestaurant.app.entities.dto.NewMenuItemDTO;
+import com.chillsrestaurant.app.entities.mapper.MenuItemMapper;
 import com.chillsrestaurant.app.repositories.MenuItemRepository;
 import com.chillsrestaurant.app.services.MenuItemService;
 
@@ -15,9 +17,11 @@ import com.chillsrestaurant.app.services.MenuItemService;
 public class MenuItemServiceImpl implements MenuItemService {
 
     private final MenuItemRepository menuItemRepository;
+    private final MenuItemMapper menuItemMapper;
 
-    public MenuItemServiceImpl(MenuItemRepository menuItemRepository) {
+    public MenuItemServiceImpl(MenuItemRepository menuItemRepository, MenuItemMapper menuItemMapper) {
         this.menuItemRepository = menuItemRepository;
+        this.menuItemMapper = menuItemMapper;
     }
 
     public List<MenuItemDTO> getAllProducts() {
@@ -40,12 +44,10 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
-    public List<MenuItemDTO> createMenuItem(MenuItemDTO newMenuItem) {
+    public List<MenuItemDTO> createMenuItem(NewMenuItemDTO newMenuItem) {
 
         try {
-            MenuItem menuItem = MenuItem.builder().name(newMenuItem.getName()).price(newMenuItem.getPrice())
-                    .imageBlob(newMenuItem.getImage().getBytes()).category(newMenuItem.getCategory())
-                    .build();
+            MenuItem menuItem = this.menuItemMapper.newMenuItemDtoToMenuItem(newMenuItem);
             this.menuItemRepository.save(menuItem);
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             System.err.println(e.getMessage());

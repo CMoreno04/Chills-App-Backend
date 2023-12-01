@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chillsrestaurant.app.entities.dto.MenuItemDTO;
+import com.chillsrestaurant.app.entities.dto.NewMenuItemDTO;
 import com.chillsrestaurant.app.services.MenuItemService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +34,7 @@ public class MenuItemController {
 
     @PostMapping("/add")
     @Operation(summary = "Adds Menu Items in Database")
-    public ResponseEntity<List<MenuItemDTO>> addMenuItems(@RequestBody MenuItemDTO menuItemDTO) {
+    public ResponseEntity<List<MenuItemDTO>> addMenuItems(@RequestBody NewMenuItemDTO menuItemDTO) {
         return ResponseEntity.ok(this.menuItemService.createMenuItem(menuItemDTO));
     }
 

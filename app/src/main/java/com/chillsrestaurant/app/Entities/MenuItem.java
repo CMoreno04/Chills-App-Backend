@@ -36,6 +36,8 @@ public class MenuItem implements Serializable{
     
     private String category;
 
+    private String availability;
+
     @Lob
     @Column(columnDefinition="LONGBLOB")
     @JsonIgnore
