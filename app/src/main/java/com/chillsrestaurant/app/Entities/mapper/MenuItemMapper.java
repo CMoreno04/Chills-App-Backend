@@ -1,6 +1,6 @@
 package com.chillsrestaurant.app.entities.mapper;
 
-import java.util.Base64;
+import java.nio.charset.StandardCharsets;
 
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -19,14 +19,11 @@ public interface MenuItemMapper {
 
     @AfterMapping
     default void handleImageMapping(NewMenuItemDTO menuItemDto, @MappingTarget MenuItem menuItem) {
-        String imageBase64 = menuItemDto.getImage();
-        if (imageBase64 != null && !imageBase64.isEmpty()) {
-            // Splitting the Base64 string to remove data URL prefix if present
-            String[] parts = imageBase64.split(",");
-            if (parts.length > 1) {
-                byte[] decodedBytes = Base64.getDecoder().decode(parts[1]);
-                menuItem.setImageBlob(decodedBytes);
-            }
+        String imageBinaryString = menuItemDto.getImage();
+        if (imageBinaryString != null && !imageBinaryString.isEmpty()) {
+            byte[] decodedBytes = imageBinaryString.getBytes(StandardCharsets.ISO_8859_1);
+            menuItem.setImageBlob(decodedBytes);
         }
     }
+    
 }
