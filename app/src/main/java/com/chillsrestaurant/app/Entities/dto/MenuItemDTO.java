@@ -27,7 +27,7 @@ public class MenuItemDTO {
         this.description = menuItem.getDescription();
         this.name = menuItem.getName();
         this.category = menuItem.getCategory();
-        this.image = Base64.getEncoder().encodeToString(menuItem.getImageBlob());
+        this.image = (menuItem.getImageBlob() != null) ? Base64.getEncoder().encodeToString(menuItem.getImageBlob()) : null;
     }
 
 }

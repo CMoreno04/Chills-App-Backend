@@ -22,7 +22,7 @@ public class MenuItemController {
 
     private final MenuItemService menuItemService;
 
-    public MenuItemController(com.chillsrestaurant.app.services.MenuItemService menuItemService) {
+    public MenuItemController(MenuItemService menuItemService) {
         this.menuItemService = menuItemService;
     }
 
